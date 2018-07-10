@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <com.cnksi.common.view.UnderLineLinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.cnksi.common.view.UnderLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/xs_gray_background_color"
+        android:layout_height="132px"
+        android:background="@color/color_edf6fc"
         android:orientation="horizontal"
         app:drawUnderLine="true"
         app:lineColor="@color/xs_line_color"
@@ -17,58 +16,62 @@
         <TextView
             android:id="@+id/tv_group_item"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/xs_gray_background_color"
+            android:background="@color/color_edf6fc"
             android:gravity="center_vertical"
-            android:minHeight="@dimen/xs_device_space_larger_height_px"
-            android:paddingBottom="@dimen/xs_text_button_padding_top_px"
-            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-            android:paddingTop="@dimen/xs_text_button_padding_top_px"
-            android:textColor="@color/xs_green_color"
-            android:textSize="@dimen/xs_global_text_size_px"/>
+            android:paddingLeft="45px"
+            android:text=""
+            android:textColor="@color/color_626262"
+            android:textSize="45px" />
 
         <TextView
             android:id="@+id/tv_group_item_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/xs__30px"
-            android:background="@color/xs_green_color"
+            android:background="@color/color_72a4ff"
             android:gravity="center_vertical"
             android:minHeight="80px"
             android:paddingLeft="@dimen/xs_global_padding_left_right_px"
             android:paddingRight="@dimen/xs_global_padding_left_right_px"
             android:text="全选"
             android:textColor="@color/xs_white"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_defect_count"
+            android:layout_width="70px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="31px"
+            android:layout_marginRight="@dimen/xs__30px"
+            android:layout_marginTop="31px"
+            android:background="@drawable/shape_fd8a88"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/xs_white"
+            android:textSize="36px"
+            android:visibility="gone" />
 
         <!-- 设备名称 -->
         <ImageView
             android:id="@+id/ibt_copy_pen"
-            android:layout_width="80px"
+            android:layout_width="70px"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginBottom="31px"
             android:layout_marginLeft="@dimen/xs_device_item_name_padding_left_px"
             android:layout_marginRight="@dimen/xs__30px"
-            android:background="@android:color/transparent"
+            android:layout_marginTop="31px"
+            android:background="@drawable/shape_72aeff"
             android:contentDescription="@null"
             android:scaleType="centerInside"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_green_unfinish"/>
+            app:srcCompat="@drawable/ic_white_unfinish" />
 
-        <ImageView
-            android:id="@+id/iv_haslocationed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30px"
-            android:scaleType="centerInside"
-            android:visibility="gone"
-            app:srcCompat="@drawable/xs_icon_locationed"/>
 
         <ImageView
             android:id="@+id/img_open"
@@ -76,6 +79,18 @@
             android:layout_height="50px"
             android:layout_gravity="center_vertical"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/xs_ic_open"/>
+            android:visibility="gone"
+            app:srcCompat="@drawable/xs_ic_open" />
+
+        <ImageView
+            android:id="@+id/iv_haslocationed"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:padding="15px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30px"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_no_location"
+            android:visibility="gone" />
     </com.cnksi.common.view.UnderLineLinearLayout>
 </layout>

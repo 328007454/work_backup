@@ -77,7 +77,7 @@ public class DevicePartRecylerAdapter extends BaseRecyclerAdapter<DbModel> {
 
         if (position == clickPosition) {
             mTvDevicePartName.setSelected(true);
-            mTvDevicePartName.setTextColor(mContext.getResources().getColor(R.color.xs_light_blue));
+            mTvDevicePartName.setTextColor(mContext.getResources().getColor(R.color.color_019bfb));
         } else {
             mTvDevicePartName.setSelected(false);
             mTvDevicePartName.setTextColor(mContext.getResources().getColor(R.color.xs_gray_text_color_new));

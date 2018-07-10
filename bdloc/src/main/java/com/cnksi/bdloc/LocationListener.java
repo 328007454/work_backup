@@ -37,6 +37,6 @@ public abstract class LocationListener {
      */
     public boolean isTrustLocation(BDLocation bdLocation) {
         return null != bdLocation && (BDLocation.TypeOffLineLocation == bdLocation.getLocType() || BDLocation.TypeNetWorkLocation == bdLocation.getLocType()
-                || BDLocation.TypeGpsLocation == bdLocation.getLocType());
+                || BDLocation.TypeGpsLocation == bdLocation.getLocType()||(BuildConfig.DEBUG&&BDLocation.INDOOR_LOCATION_SOURCE_WIFI==bdLocation.getLocType()));
     }
 }

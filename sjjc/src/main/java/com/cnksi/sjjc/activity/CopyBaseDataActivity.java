@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.utils.StringUtilsExt;
@@ -21,6 +22,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
 /**
  * 抄录温湿度界面
  */
+@Route(path = "/copyBaseData/activity")
 public class CopyBaseDataActivity extends BaseSjjcActivity {
     //报告表
     private Report mReport;

@@ -7,7 +7,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.bdzinspection.activity.maintenance.SafetyBdzListActivity;
 import com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity;
-import com.cnksi.bdzinspection.activity.xian.TourInspectionHomeActivity;
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
 import com.cnksi.common.BuildConfig;
 import com.cnksi.common.Config;
@@ -108,11 +107,16 @@ public class ActivityUtil {
         activity.startActivity(intent);
     }
 
-    public static void startTourActivity(BaseCoreActivity mActivity) {
-        Intent intent2 = new Intent();
-        intent2.setClass(mActivity, TourInspectionHomeActivity.class);
-        intent2.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
-        intent2.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
-        mActivity.startActivity(intent2);
+    public static void startTourActivity(BaseCoreActivity mActivity,String type) {
+        ARouter.getInstance().build("/xian/tourActivity")
+                .withString(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""))
+                .withString(Config.INSPECTION_TYPE,type)
+                .withString(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "")).navigation();
+
+//        Intent intent2 = new Intent();
+//        intent2.setClass(mActivity, TourInspectionHomeActivity.class);
+//        intent2.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
+//        intent2.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
+//        mActivity.startActivity(intent2);
     }
 }

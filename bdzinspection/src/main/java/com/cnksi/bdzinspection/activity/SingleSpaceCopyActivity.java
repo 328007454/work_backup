@@ -250,11 +250,11 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         final LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mCopyBinding.rlCopyAllValueContainer.getLayoutParams();
         if (!isSpread) {
             mCopyBinding.typeContainer.setVisibility(View.GONE);
-            mCopyBinding.ibtnSpread.setImageResource(R.drawable.xs_ic_narrow);
+            mCopyBinding.ibtnSpread.setImageResource(R.mipmap.icon_full_screen);
             params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         } else {
             mCopyBinding.typeContainer.setVisibility(View.VISIBLE);
-            mCopyBinding.ibtnSpread.setImageResource(R.drawable.xs_ic_amplify);
+            mCopyBinding.ibtnSpread.setImageResource(R.mipmap.icon_full_screen);
             params.height = AutoUtils.getPercentHeightSizeBigger(330);
         }
         mCopyBinding.rlCopyAllValueContainer.setLayoutParams(params);

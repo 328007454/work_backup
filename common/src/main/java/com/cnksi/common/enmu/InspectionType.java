@@ -141,6 +141,8 @@ public enum InspectionType {
                 return InspectionType.special_xideng.name();
             } else if (TextUtils.equals(value, InspectionType.professional.value)) {
                 return InspectionType.professional.name();
+            } else if (TextUtils.equals(value, InspectionType.SBJC.value)) {
+                return InspectionType.SBJC.name();
             }
         } catch (Exception ex) {
             return (InspectionType.ERROR.name());

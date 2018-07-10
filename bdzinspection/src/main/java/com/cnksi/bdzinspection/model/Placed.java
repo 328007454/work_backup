@@ -76,6 +76,10 @@ public class Placed extends BaseModel {
     @Column(name = CREATETIME)
     public String createTime;
 
+    public final static String PIC = "pic";
+    @Column(name = PIC)
+    public String pic;
+
     public Placed() {
     }
 

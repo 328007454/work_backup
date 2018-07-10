@@ -2,8 +2,11 @@ package com.cnksi.common.daoservice;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.CommonApplication;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;
@@ -440,17 +443,61 @@ public class DefectRecordService extends BaseService<DefectRecord> {
                     "        AND has_remove = 'N'\n" +
                     "        and is_copy <> 'Y'\n" +
                     "        and (val = '' or val is NULL)\n" +
-                    "        and discovered_date > (select datetime('now','localtime','start of day','-6 days','weekday 1'))\n" +
-                    "        and discovered_date < (select datetime('now','localtime','start of day','23 hours','59 minutes','59 seconds','0 day','weekday 0') \n" +
-                    ")\n" +
                     "        ORDER BY\n" +
                     "        discovered_date DESC").findAll();
+            String sqlStart = "select datetime('now','localtime','start of day','-6 day','weekday 1') as date";
+            SqlInfo sqlInfo = new SqlInfo(sqlStart);
+            DbModel modelStart = CommonApplication.getInstance().getDbManager().findDbModelFirst(sqlInfo);
+            String sqlEnd = "select datetime('now','localtime','start of day','weekday 0','23 hour','59 minute','59 second') as date";
+            SqlInfo sqlInfoEnd = new SqlInfo(sqlEnd);
+            DbModel modelEnd = CommonApplication.getInstance().getDbManager().findDbModelFirst(sqlInfoEnd);
+            if (defectRecords != null && !defectRecords.isEmpty()) {
+                defectRecords = calculateRemindTime(defectRecords, modelStart.getString("date"), modelEnd.getString("date"));
+            } else {
+                return defectRecords;
+            }
         } catch (DbException e) {
             e.printStackTrace();
             return defectRecords;
         }
         return defectRecords;
+    }
 
+    public List<DefectRecord> calculateRemindTime(List<DefectRecord> defectRecordList, String startTiem, String endTime) {
+        List<DefectRecord> defectRecords = new ArrayList<>();
+        for (DefectRecord defectRecord : defectRecordList) {
+            if (defectRecord == null || TextUtils.isEmpty(defectRecord.discovered_date)) {
+                continue;
+            }
+            int day;
+            if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(defectRecord.defectlevel) || Config.CRISIS_LEVEL.equals(defectRecord.defectlevel)) {
+                day = 1;
+            } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(defectRecord.defectlevel) || Config.SERIOUS_LEVEL.equals(defectRecord.defectlevel)) {
+                day = 30;
+            } else {
+                day = 365;
+            }
+            String d = DateUtils.getAfterTime(defectRecord.discovered_date, day, "yyyy-MM-dd HH:mm:ss");
+            boolean compareStart = DateUtils.compareDate(d, startTiem, DateUtils.yyyy_MM_dd_HH_mm_ss);
+            boolean compareEnd = DateUtils.compareDate(endTime, d, DateUtils.yyyy_MM_dd_HH_mm_ss);
+            if (compareEnd && compareStart) {
+                defectRecords.add(defectRecord);
+            }
+        }
+        return defectRecords;
+    }
 
+    public List<DefectRecord> findDefectByDeviceId(String currentDeviceId) {
+        List<DefectRecord> defectRecordList = new ArrayList<>();
+        try {
+            Selector<DefectRecord> selector = selector().and(DefectRecord.HAS_TRACK, "=", "N")
+                    .and(DefectRecord.HAS_REMOVE, "=", "N")
+                    .and(DefectRecord.IS_COPY, "<>", "Y").and(DefectRecord.DEVICEID, "=", currentDeviceId);
+            defectRecordList = selector.findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+            return defectRecordList;
+        }
+        return defectRecordList;
     }
 }

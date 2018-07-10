@@ -7,6 +7,6 @@
         android:topLeftRadius="0dp"
         android:topRightRadius="@dimen/xs_half_corner_radius" />
 
-    <solid android:color="@color/xs_yellow_color" />
+    <solid android:color="@color/color_ffc000" />
 
 </shape>

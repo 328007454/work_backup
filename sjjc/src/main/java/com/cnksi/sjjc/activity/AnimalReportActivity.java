@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
@@ -34,6 +35,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/6/7.
  * 防小动物报告界面
  */
+@Route(path = "/animalReport/activity")
 public class AnimalReportActivity extends BaseReportActivity {
     public static final int ANIMATION = 0X100;
     public static final int VIBRATOR = ANIMATION + 1;

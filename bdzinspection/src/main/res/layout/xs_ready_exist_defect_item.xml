@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:contentDescription="@null"
         android:src="@drawable/xs_ic_task_unfinish"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

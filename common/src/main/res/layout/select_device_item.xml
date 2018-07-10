@@ -39,7 +39,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="2"
                 android:paddingRight="@dimen/xs_device_item_name_padding_right_px"
-                android:textColor="@drawable/xs_device_select_textcolor"
+                android:textColor="@color/color_2cc2ea"
                 android:textSize="@dimen/xs_device_item_name_text_size_px"/>
 
             <!-- 设备缺陷数量 -->
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/xs_device_defect_orange_background"
+                android:background="@drawable/shape_fd8a88"
                 android:gravity="center"
                 android:minHeight="@dimen/xs_device_defect_count_minheight_px"
                 android:minWidth="@dimen/xs_device_defect_count_minheight_px"

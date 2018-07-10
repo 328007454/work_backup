@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="840px"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:background="@drawable/shape_rectangle_10px_corner"
+            android:layout_width="840px"
+            android:layout_height="470px"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/xs__30px"
+            android:paddingRight="@dimen/xs__30px">
+
+            <TextView
+                android:textSize="44px"
+                android:id="@+id/tips"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="你距离该间隔较远，请调整距离重试或拍照确认到位" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txt_gps_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/xs__30px"
+                android:text="经纬度信息"
+                android:textColor="#FF726f"
+                android:textSize="@dimen/txt_size36px" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50px"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bt_photo_location"
+                    android:layout_width="0px"
+                    android:layout_height="@dimen/dimen_120px"
+                    android:layout_marginRight="21px"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_selector_ff7247_ff9147"
+                    android:drawableLeft="@mipmap/ic_location_take_photo"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/xs__30px"
+                    android:paddingRight="@dimen/xs__30px"
+                    android:text="拍摄间隔照片"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_size36px" />
+
+                <Button
+                    android:id="@+id/bt_request_location"
+                    android:layout_width="0px"
+                    android:layout_height="@dimen/dimen_120px"
+                    android:layout_marginLeft="21px"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_selector_01bbb6_9ada6a"
+                    android:drawableLeft="@mipmap/ic_request_location"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/xs__30px"
+                    android:paddingRight="@dimen/xs__30px"
+                    android:text="刷新位置信息"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_size36px" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_60px"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_cancel_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_close" />
+
+        </LinearLayout>
+        >
+
+
+    </LinearLayout>
+</layout>

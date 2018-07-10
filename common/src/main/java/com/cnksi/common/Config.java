@@ -22,6 +22,7 @@ public class Config implements Cst {
     public static final String HAS_ALL_CHOICE = "hasAllChoice";
     public static final String SWITCH_DEFECT = "switchDefect";
     public static final String HAS_REPORT_ID = "hasReportId";
+    public static final String INSPECTION_TYPE = "inspection_type";
     public static boolean DEBUG = BuildConfig.DEBUG;
     public static final  int START_ACTIVITY_FORRESULT=0x0;
     public static final int SUCCESS = 0x100;
@@ -433,6 +434,8 @@ public class Config implements Cst {
 
     public static final String SINGLE = "single";
     public static final String MULTI = "multi";
+
+
 //    public static final String WEEK="本周";
 //    public static final String WEEK="本周";
 //    public static final String WEEK="本周";

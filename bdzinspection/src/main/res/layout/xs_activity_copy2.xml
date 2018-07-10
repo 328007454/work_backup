@@ -4,7 +4,9 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ll_root_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true">
 
         <include
             android:id="@+id/include_title"
@@ -16,7 +18,8 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_keyboard_help_layout"
             android:layout_below="@+id/include_title"
-            android:layout_marginTop="@dimen/xs_grid_vertical_spacing_px">
+            android:layout_marginTop="@dimen/xs_grid_vertical_spacing_px"
+            android:background="@color/color_f3f4f4">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -53,27 +56,37 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btn_finish"
+        <FrameLayout
+            android:background="@color/color_f3f4f4"
+            android:id="@+id/container_bt"
             android:layout_width="match_parent"
-            android:layout_height="118px"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
-            android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-            android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
-            android:background="@drawable/xs_red_button_background_selector"
-            android:gravity="center"
-            android:text="@string/xs_finish_str"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/xs_global_text_size_px" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/btn_finish"
+                android:layout_width="match_parent"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:text="@string/xs_finish_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+        </FrameLayout>
+
 
         <LinearLayout
+            android:background="@color/color_f3f4f4"
             android:id="@+id/ll_keyboard_help_layout"
             android:layout_width="match_parent"
             android:layout_height="520px"
-            android:layout_above="@+id/btn_finish"
+            android:layout_above="@+id/container_bt"
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/shadom"
             android:orientation="horizontal"

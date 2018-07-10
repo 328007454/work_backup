@@ -8,7 +8,7 @@
         android:orientation="vertical">
 
 
-        <com.cnksi.workticket.view.StyleLineLinearLayout
+        <com.cnksi.common.view.StyleLineLinearLayout
             android:layout_width="match_parent"
             android:layout_height="171px"
             android:orientation="horizontal"
@@ -68,7 +68,7 @@
                     android:textColor="@color/core_text_green_1bbc9b"
                     android:textSize="@dimen/ticket_36px" />
             </RelativeLayout>
-        </com.cnksi.workticket.view.StyleLineLinearLayout>
+        </com.cnksi.common.view.StyleLineLinearLayout>
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/date_calendar"

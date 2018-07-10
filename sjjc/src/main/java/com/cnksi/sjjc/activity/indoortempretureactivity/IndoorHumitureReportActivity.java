@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
@@ -24,6 +25,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
 /**
  * 室内温湿度报告界面
  */
+@Route(path = "/indoorHumitureReport/activity")
 public class IndoorHumitureReportActivity extends BaseReportActivity {
 
     public static final int ANIMATION = 0X100;

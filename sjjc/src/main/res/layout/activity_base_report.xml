@@ -2,16 +2,18 @@
 <layout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                  android:id="@+id/ll_root_container"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_minheight_px"
-            android:background="@color/global_base_color">
+            android:background="@color/color_019bfb">
 
             <ImageButton
                 android:id="@+id/btn_back"
@@ -24,7 +26,7 @@
                 android:contentDescription="@null"
                 android:src="@drawable/cancel_button_background"
                 android:visibility="visible"
-                app:srcCompat="@drawable/cancel_button_background"/>
+                app:srcCompat="@drawable/cancel_button_background" />
 
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/tv_title"
@@ -36,7 +38,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/tv_title_text_size"/>
+                android:textSize="@dimen/tv_title_text_size" />
 
             <ImageButton
                 android:id="@+id/btn_right"
@@ -47,11 +49,11 @@
                 android:layout_centerVertical="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
-                app:srcCompat="@drawable/return_main_menu_selector"
-                />
+                app:srcCompat="@drawable/return_main_menu_selector" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:background="@color/color_f3f4f4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/global_padding_left_right_px"
@@ -63,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="fitXY"
-                android:src="@mipmap/ic_report_exit"/>
+                android:src="@mipmap/ic_report_exit" />
 
             <RelativeLayout
                 android:id="@+id/llbase"
@@ -84,7 +86,7 @@
                     android:gravity="center"
                     android:text="@string/report_generating_str"
                     android:textColor="@color/global_gray_text_color"
-                    android:textSize="@dimen/report_generate_text_size_px"/>
+                    android:textSize="@dimen/report_generate_text_size_px" />
             </RelativeLayout>
         </RelativeLayout>
 

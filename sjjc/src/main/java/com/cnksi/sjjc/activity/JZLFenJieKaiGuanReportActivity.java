@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.ReportService;
@@ -36,6 +37,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/6/7.
  * 交直流分接开关、差动保护、室内温湿度报告
  */
+@Route(path = "/jzlfjkgReport/activity")
 public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
 

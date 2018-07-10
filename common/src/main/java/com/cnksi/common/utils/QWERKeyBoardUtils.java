@@ -3,7 +3,9 @@ package com.cnksi.common.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Vibrator;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,12 +14,13 @@ import android.widget.TextView;
 import com.cnksi.common.R;
 import com.cnksi.common.databinding.FragmentKeyboardBinding;
 import com.cnksi.common.databinding.KeyboardButtonBinding;
+import com.cnksi.common.databinding.XLayoutSearchBinding;
 import com.cnksi.core.utils.ScreenUtils;
 
 
 /**
- * @version 1.0
  * @author wastrel
+ * @version 1.0
  * @date 2017/7/5 9:01
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -26,6 +29,7 @@ final public class QWERKeyBoardUtils {
     private Activity mActivity;
     private Vibrator mVibrator;
     private FragmentKeyboardBinding binding;
+    private XLayoutSearchBinding searchBinding;
     private TextView txtKeyWord;
     private boolean isCharMode;
     private keyWordChangeListener listener;
@@ -74,7 +78,7 @@ final public class QWERKeyBoardUtils {
     public void init(LinearLayout rootLayout, final keyWordChangeListener listener) {
         this.listener = listener;
         // 添加键盘布局
-        binding=FragmentKeyboardBinding.inflate(mActivity.getLayoutInflater());
+        binding = FragmentKeyboardBinding.inflate(mActivity.getLayoutInflater());
 
         txtKeyWord = binding.tvKeyboardInput;
         rootLayout.addView(binding.getRoot(), 0);
@@ -91,6 +95,31 @@ final public class QWERKeyBoardUtils {
         binding.tvKeyboardWords.setOnClickListener(keyClickListener);
     }
 
+    public void initOtherSerchView(LinearLayout rootLayout,  keyWordChangeListener listener) {
+        this.listener = listener;
+        searchBinding = XLayoutSearchBinding.inflate(mActivity.getLayoutInflater());
+        rootLayout.addView(searchBinding.getRoot(),0);
+        searchBinding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (listener != null) {
+                    listener.onChange(searchBinding.etSearch, s.toString(),s.toString());
+                }
+            }
+        });
+    }
+
+
     public void setListener(keyWordChangeListener listener) {
         this.listener = listener;
     }
@@ -102,8 +131,8 @@ final public class QWERKeyBoardUtils {
         keyWordLayout.setGravity(Gravity.CENTER);
         int count = keyWord.length;
         for (int i = 0; i < count; i++) {
-            KeyboardButtonBinding keyBinding=KeyboardButtonBinding.inflate(mActivity.getLayoutInflater());
-            keyBinding.tvKeyboardItem.setText( keyWord[i]);
+            KeyboardButtonBinding keyBinding = KeyboardButtonBinding.inflate(mActivity.getLayoutInflater());
+            keyBinding.tvKeyboardItem.setText(keyWord[i]);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(keyWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
             if (0 != i) {

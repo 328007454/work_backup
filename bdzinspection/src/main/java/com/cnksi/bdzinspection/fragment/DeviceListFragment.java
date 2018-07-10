@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,14 +23,15 @@ import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.CopyValueActivity2;
-import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
+import com.cnksi.bdzinspection.activity.xian.XNewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsDialogCopySnwsdBinding;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
 import com.cnksi.bdzinspection.model.SpacingLastly;
+import com.cnksi.bdzinspection.other.ReQuestLocationDialog;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
@@ -92,6 +94,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     private ArriveCheckHelper arriveCheckHelper;
     private QWERKeyBoardUtils qwerKeyBoardUtils;
     private SpacingLastly spacingLastly;
+    private HashSet<String> hasQrCodeSpids;
 
 
     @Override
@@ -110,13 +113,13 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     private void initialUI() {
         getBundleValue();
         qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
-        qwerKeyBoardUtils.init(rootHolder.getView(R.id.ll_root_container), this);
+        qwerKeyBoardUtils.initOtherSerchView(rootHolder.getView(R.id.ll_root_container), this);
         data = new ArrayList<>();
         adapter = new DeviceAdapter(currentActivity, data);
         adapter.setCurrentFunctionMode(currentFunctionModel);
         adapter.setCurrentInspectionType(currentInspectionType);
         // 设置间隔点击事件
-        adapter.setGroupItemClickListener((v, dbModel, position) -> {
+        adapter.setGroupItemClickListener((View v, DbModel dbModel, int position) -> {
             if (v.getId() == R.id.ibt_copy_pen) {
                 PlaySound.getIntance(currentActivity).play(R.raw.input);
                 Intent intent = new Intent(currentActivity, SingleSpaceCopyActivity.class);
@@ -124,6 +127,25 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
                 intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentFunctionModel);
                 startActivity(intent);
+            } else if (v.getId() == R.id.iv_haslocationed) {
+                if (v.getTag() != null) {
+                    final ReQuestLocationDialog dialog = ReQuestLocationDialog.getInstance();
+                    dialog.setItemClickListener((v1, data, position1) -> {
+                        if (v1.getId() == R.id.bt_photo_location) {
+                            String photoName = (String) data;
+                            arriveCheckHelper.saveLocation(dbModel, null, true, photoName);
+                            ToastUtils.showMessage("保存成功");
+                        } else if (v1.getId() == R.id.bt_request_location) {
+                            BDLocation location = (BDLocation) data;
+                            arriveCheckHelper.saveLocation(dbModel, location, true);
+                            ToastUtils.showMessage("保存成功");
+                        }
+
+                    });
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    dialog.show(fragmentTransaction, "dialog");
+                }
+
             }
         });
         // 设置间隔长按事件,间隔定位
@@ -139,7 +161,8 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         // 跳转设备详情
         adapter.setDeviceClickListener((v, dbModel, position) -> {
             NextDeviceUtils.getInstance().setLastIndex(-1);
-            Intent intent = new Intent(currentActivity, NewDeviceDetailsActivity.class);
+//            Intent intent = new Intent(currentActivity, NewDeviceDetailsActivity.class);
+            Intent intent = new Intent(currentActivity, XNewDeviceDetailsActivity.class);
             intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString(DeviceService.DEVICE_ID_KEY));
             intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
@@ -285,8 +308,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             }
             getSpaceLastly();
             // 查询设备及设备所在间隔
-            List<DbModel> deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, currentReportId, "");
+            List<DbModel> deviceList = DeviceService.getInstance().findAllDeviceByName(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, currentReportId, "");
             LinkedHashMap<String, List<DbModel>> spacingDeviceMap = new LinkedHashMap<>();
+            hasQrCodeSpids = new HashSet<>();
             if (null != deviceList && !deviceList.isEmpty()) {
                 for (DbModel dbModel : deviceList) {
                     String spacingId = dbModel.getString("spid");
@@ -301,6 +325,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                         spacingIds.add(spacingId);
                     }
                     deviceDbModelMap.put(dbModel.getString(DeviceService.DEVICE_ID_KEY), dbModel);
+                    if (!TextUtils.isEmpty(dbModel.getString("qrcode"))) {
+                        hasQrCodeSpids.add(dbModel.getString("spid"));
+                    }
                 }
                 boolean isEmptyKey = TextUtils.isEmpty(keyWord);
                 List<DbModel> sortList = new ArrayList<>(isEmptyKey ? deviceList.size() : 0);
@@ -323,9 +350,11 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             }
             if (!data.isEmpty()) {
                 getActivity().runOnUiThread(() -> {
+                    adapter.setHasQrCodeSpids(hasQrCodeSpids);
                     if (!TextUtils.isEmpty(keyWord)) {
                         adapter.setShowOnly(false);
                         adapter.expandAll();
+                        adapter.notifyDataSetChanged();
                     } else {
                         adapter.setShowOnly(true);
                         if (!qwerKeyBoardUtils.isCharMode() && spacingLastly != null) {
@@ -335,7 +364,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                             }
                             if (-1 != index[1]) {
                                 adapter.expand(index[1]);
-                                ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(index[1],0);
+                                ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(index[1], 0);
                             } else {
                                 adapter.notifyDataSetChanged();
                             }
@@ -343,7 +372,6 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                             adapter.notifyDataSetChanged();
                         }
                     }
-//                    queryInfo();
                 });
             }
         });

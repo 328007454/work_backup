@@ -1,215 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:autofit="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
 
-    <LinearLayout
-        android:id="@+id/ll_root_container"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:autofit="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/ll_root_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/xs_title_bar_minheight_px"
-            android:background="@color/xs_global_base_color">
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/ibtn_cancel"
-                style="@style/svgButtonBack"
-                android:layout_width="@dimen/xs_title_bar_minheight_px"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/xs_title_bar_minheight_px"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                android:contentDescription="@null"
-                android:visibility="visible"
-                app:srcCompat="@drawable/cancel_button_background"/>
+                android:background="@color/color_019bfb">
 
-            <me.grantland.widget.AutofitTextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
-                android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_title_text_size_px"
-                autofit:minTextSize="26px"/>
+                <ImageButton
+                    android:id="@+id/ibtn_cancel"
+                    style="@style/svgButtonBack"
+                    android:layout_width="@dimen/xs_title_bar_minheight_px"
+                    android:layout_height="@dimen/xs_title_bar_minheight_px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/cancel_button_background" />
 
-            <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/cb_selected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/xs__30px"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableLeft="@drawable/xs_type_copy_selector"
-                android:drawablePadding="20px"
-                android:gravity="center_vertical"
-                android:text="未抄录设备"
-                android:textColor="@color/xs_white"
-                android:textSize="@dimen/xs_dialog_title_textsize_px"/>
-        </RelativeLayout>
-
-
-        <com.cnksi.core.view.PagerSlidingTabStrip
-            android:id="@+id/tab_strip"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/xs_tab_strip_minheight_px"
-            android:background="@color/xs_tab_strip_background_color"/>
-
-        <RelativeLayout
-            android:id="@+id/rl_copy_all_value_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/xs_gray_background_color">
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"/>
-
-            <ImageButton
-                android:id="@+id/ibtn_spread"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/xs_global_padding_left_right_px"
-                android:background="@drawable/xs_gray_button_background_selector"
-                android:contentDescription="@null"
-                android:padding="@dimen/xs_twelve_oval_size_px"
-                android:src="@drawable/xs_ic_amplify"/>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/xs_line_eight_width"
-            android:background="@color/xs_line_color"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/ll_keyboard_help_layout"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:id="@+id/copy_container"
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/tv_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@color/xs_line_color"
-                    android:dividerHeight="@dimen/xs_line_half_width_px"
-                    android:orientation="vertical"
-                    android:showDividers="middle"/>
-            </ScrollView>
-
-            <LinearLayout
-                android:id="@+id/ll_keyboard_help_layout"
-                android:layout_width="match_parent"
-                android:layout_height="340px"
-                android:layout_above="@+id/btn_layout"
-                android:orientation="horizontal"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/btn_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
-                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-                android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_pre"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="118px"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/xs_grass_green_button_background_selector"
-                    android:drawableLeft="@drawable/xs_ic_pre_page"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+                    android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
                     android:gravity="center"
-                    android:minHeight="@dimen/xs_button_minheight"
-                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-                    android:text="@string/xs_pre"
+                    android:text=""
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/xs_global_text_size_px"/>
+                    android:textSize="@dimen/xs_title_text_size_px"
+                    autofit:minTextSize="26px" />
 
-                <Button
-                    android:id="@+id/btn_next"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="118px"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                    android:layout_weight="1"
-                    android:background="@drawable/xs_grass_green_button_background_selector"
-                    android:drawableRight="@drawable/xs_ic_next_page"
-                    android:gravity="center"
-                    android:minHeight="@dimen/xs_button_minheight"
-                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
-                    android:text="@string/xs_next"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/xs_global_text_size_px"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/shadom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/btn_layout"
-                android:background="#80000000"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/shadom_tip"
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/cb_selected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/xs_white_text"
-                    android:textSize="@dimen/xs_global_text_size_px"/>
-            </LinearLayout>
-        </RelativeLayout>
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/xs__30px"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/xs_type_copy_selector"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:text="未抄录设备"
+                    android:textColor="@color/xs_white"
+                    android:textSize="@dimen/xs_dialog_title_textsize_px" />
+            </RelativeLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/shadom_1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80000000"
-        android:clickable="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <com.cnksi.core.view.PagerSlidingTabStrip
+                android:id="@+id/tab_strip"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/xs_tab_strip_minheight_px"
+                android:background="@color/xs_tab_strip_background_color"
+                android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/shadom_tip_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/xs_white_text"
-            android:textSize="240px"/>
-    </LinearLayout>
-</FrameLayout>
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/st_week"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_120px"
+                android:background="@color/color_019bfb"
+                android:paddingLeft="@dimen/xs__30px"
+                android:paddingRight="@dimen/xs__30px"
+                app:tl_indicator_color="@color/color_ff8b47"
+                app:tl_indicator_height="5px"
+                app:tl_indicator_width_equal_title="true"
+                app:tl_tab_space_equal="true"
+                app:tl_textSelectColor="#fff"
+                app:tl_textUnselectColor="#8DC7FD"
+                app:tl_textsize="39px" />
+
+            <RelativeLayout
+                android:id="@+id/rl_copy_all_value_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/xs_gray_background_color">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px" />
+
+                <ImageButton
+                    android:id="@+id/ibtn_spread"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/xs_global_padding_left_right_px"
+                    android:background="@drawable/xs_gray_button_background_selector"
+                    android:scaleType="centerInside"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/icon_full_screen" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/xs_line_eight_width"
+                android:background="@color/xs_line_color" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/ll_keyboard_help_layout"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:id="@+id/copy_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@color/xs_line_color"
+                        android:dividerHeight="@dimen/xs_line_half_width_px"
+                        android:orientation="vertical"
+                        android:showDividers="middle" />
+                </ScrollView>
+
+                <LinearLayout
+                    android:id="@+id/ll_keyboard_help_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="340px"
+                    android:layout_above="@+id/btn_layout"
+                    android:orientation="horizontal"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/btn_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                    android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_pre"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_selector_f96a6a"
+                        android:drawableLeft="@drawable/xs_ic_pre_page"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                        android:text="@string/xs_pre"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_size_px" />
+
+                    <Button
+                        android:id="@+id/btn_next"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_019bfb"
+                        android:drawableRight="@drawable/xs_ic_next_page"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                        android:text="@string/xs_next"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_size_px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/shadom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/btn_layout"
+                    android:background="#80000000"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/shadom_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/xs_white_text"
+                        android:textSize="@dimen/xs_global_text_size_px" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shadom_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/shadom_tip_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/xs_white_text"
+                android:textSize="240px" />
+        </LinearLayout>
+    </FrameLayout>
 </layout>

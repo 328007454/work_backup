@@ -22,7 +22,7 @@
                 android:background="@color/ticket_color_f0f0f0">
 
 
-                <com.cnksi.workticket.view.StyleLineLinearLayout
+                <com.cnksi.common.view.StyleLineLinearLayout
                     android:id="@+id/bdz_container"
                     android:layout_width="match_parent"
                     android:layout_height="189px"
@@ -59,9 +59,9 @@
                         android:textColor="#242827"
                         android:textSize="39px" />
 
-                </com.cnksi.workticket.view.StyleLineLinearLayout>
+                </com.cnksi.common.view.StyleLineLinearLayout>
 
-                <com.cnksi.workticket.view.StyleLineLinearLayout
+                <com.cnksi.common.view.StyleLineLinearLayout
                     android:id="@+id/work_container"
                     android:layout_width="match_parent"
                     android:layout_height="370px"
@@ -133,9 +133,9 @@
                         android:textSize="33px"
                         android:visibility="visible" />
 
-                </com.cnksi.workticket.view.StyleLineLinearLayout>
+                </com.cnksi.common.view.StyleLineLinearLayout>
 
-                <com.cnksi.workticket.view.StyleLineLinearLayout
+                <com.cnksi.common.view.StyleLineLinearLayout
                     android:id="@+id/dept_container"
                     android:layout_width="match_parent"
                     android:layout_height="189px"
@@ -170,10 +170,10 @@
                         android:textColor="#242827"
                         android:textSize="39px" />
 
-                </com.cnksi.workticket.view.StyleLineLinearLayout>
+                </com.cnksi.common.view.StyleLineLinearLayout>
 
 
-                <com.cnksi.workticket.view.StyleLineLinearLayout
+                <com.cnksi.common.view.StyleLineLinearLayout
                     android:id="@+id/person_container"
                     android:layout_width="match_parent"
                     android:layout_height="189px"
@@ -187,7 +187,7 @@
                     app:line_size="6"
                     app:margin_left_line_size="30">
 
-                    <com.cnksi.workticket.view.StyleLineLinearLayout
+                    <com.cnksi.common.view.StyleLineLinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -213,7 +213,7 @@
                             android:hint="请输入工作负责人"
                             android:textColor="#242827"
                             android:textSize="39px" />
-                    </com.cnksi.workticket.view.StyleLineLinearLayout>
+                    </com.cnksi.common.view.StyleLineLinearLayout>
 
                     <View
                         android:layout_width="3px"
@@ -222,7 +222,7 @@
                         android:layout_marginTop="38px"
                         android:background="@color/ticket_color_eaf2f1" />
 
-                    <com.cnksi.workticket.view.StyleLineLinearLayout
+                    <com.cnksi.common.view.StyleLineLinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -250,12 +250,12 @@
                             android:inputType="phone"
                             android:textColor="#242827"
                             android:textSize="39px" />
-                    </com.cnksi.workticket.view.StyleLineLinearLayout>
+                    </com.cnksi.common.view.StyleLineLinearLayout>
 
 
-                </com.cnksi.workticket.view.StyleLineLinearLayout>
+                </com.cnksi.common.view.StyleLineLinearLayout>
 
-                <com.cnksi.workticket.view.StyleLineLinearLayout
+                <com.cnksi.common.view.StyleLineLinearLayout
                     android:id="@+id/content_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -293,10 +293,10 @@
                         android:textColor="#242827"
                         android:textSize="39px" />
 
-                </com.cnksi.workticket.view.StyleLineLinearLayout>
+                </com.cnksi.common.view.StyleLineLinearLayout>
 
 
-                <com.cnksi.workticket.view.StyleLineLinearLayout
+                <com.cnksi.common.view.StyleLineLinearLayout
                     android:id="@+id/ticket_container"
                     android:layout_width="match_parent"
                     android:layout_height="189px"
@@ -373,7 +373,7 @@
                             android:textSize="@dimen/xs_dialog_title_textsize_px" />
                     </RadioGroup>
 
-                </com.cnksi.workticket.view.StyleLineLinearLayout>
+                </com.cnksi.common.view.StyleLineLinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/date_container"

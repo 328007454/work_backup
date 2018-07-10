@@ -38,7 +38,7 @@
             android:textSize="@dimen/ticket_33px" />
 
 
-        <com.cnksi.workticket.view.StyleLineLinearLayout
+        <com.cnksi.common.view.StyleLineLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="75px"
@@ -72,7 +72,7 @@
                 android:textColor="@color/core_bg_white_ffffff" />
 
 
-        </com.cnksi.workticket.view.StyleLineLinearLayout>
+        </com.cnksi.common.view.StyleLineLinearLayout>
 
 
     </LinearLayout>

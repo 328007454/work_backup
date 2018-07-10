@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
+import com.cnksi.bdzinspection.activity.xian.XFullDeviceListActivity;
+import com.cnksi.bdzinspection.activity.xian.XParticularDeviceListActivity;
 import com.cnksi.bdzinspection.daoservice.InspectionPreparedService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionTaskRemindBinding;
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment;
@@ -346,9 +348,9 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
                     if (containsUser && !TextUtils.isEmpty(reportId)) {
                         PreferencesUtils.put(Config.CURRENT_REPORT_ID, reportId);
                         if (mTask.inspection.contains("special")) {
-                            intent.setClass(mActivity, ParticularDeviceListActivity.class);
+                            intent.setClass(mActivity, XParticularDeviceListActivity.class);
                         } else {
-                            intent.setClass(mActivity, FullDeviceListActivity.class);
+                            intent.setClass(mActivity, XFullDeviceListActivity.class);
                         }
                     } else {
                         intent.setClass(mActivity, InspectionReadyActivity.class);

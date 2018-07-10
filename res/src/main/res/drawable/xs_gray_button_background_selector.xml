@@ -4,12 +4,12 @@
     <item android:state_pressed="true"><shape>
             <corners android:radius="@dimen/xs_half_corner_radius" />
 
-            <solid android:color="@color/xs_gray_background_pressed_color" />
+            <solid android:color="@color/color_019bfb" />
         </shape></item>
     <item android:state_pressed="false"><shape>
             <corners android:radius="@dimen/xs_half_corner_radius" />
 
-            <solid android:color="@color/xs_spread_gray_background_color" />
+            <solid android:color="@color/color_72a4ff" />
         </shape></item>
 
 </selector>

@@ -91,11 +91,12 @@ public class DeviceSelectActivity extends BaseTitleActivity {
         }
         FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), fragments, titleArray);
         binding.viewPager.setAdapter(pagerAdapter);
-        binding.tabStrip.setViewPager(binding.viewPager);
-        binding.viewPager.setOffscreenPageLimit(Integer.MAX_VALUE);
-        setPagerTabStripValue(binding.tabStrip);
-        binding.tabStrip.setTabPaddingLeftRight(37);
-        binding.tabStrip.setShouldExpand(false);
+        binding.stWeek.setViewPager(binding.viewPager);
+//        binding.tabStrip.setViewPager(binding.viewPager);
+//        binding.viewPager.setOffscreenPageLimit(Integer.MAX_VALUE);
+//        setPagerTabStripValue(binding.tabStrip);
+//        binding.tabStrip.setTabPaddingLeftRight(37);
+//        binding.tabStrip.setShouldExpand(false);
         if (selectConfig.pmsDeviceType.size()==1){
             binding.tabStrip.setVisibility(View.GONE);
         }

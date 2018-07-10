@@ -175,6 +175,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changedStatusColor();
         if (!Config.DEBUG) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }
@@ -455,7 +456,8 @@ public abstract class BaseActivity extends BaseCoreActivity {
     }
 
     public void ExitThisAndGoLauncher() {
-        ARouter.getInstance().build("/login/HomeActivity").navigation();
+        ARouter.getInstance().build("/login/XHomeActivity").navigation();
+        mActivity.finish();
     }
 
     public boolean isParticularInspection() {

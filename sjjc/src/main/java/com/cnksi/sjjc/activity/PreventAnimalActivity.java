@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.core.common.ExecutorManager;
@@ -36,6 +37,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * <p/>
  * 防小动物措施检查界面
  */
+@Route(path ="/preventAnimal/activity")
 public class PreventAnimalActivity extends BaseSjjcActivity {
     private static final int TAKEPIC_REQUEST = LOAD_DATA + 1;
     private static final int VIDEO_REQUEST = TAKEPIC_REQUEST + 1;

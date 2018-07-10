@@ -7,14 +7,14 @@
         android:id="@+id/ll_root_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/battery_color_type"
+        android:background="@color/color_019bfb"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_title_bar_minheight_px"
-            android:background="@color/xs_global_base_color">
+            android:background="@color/color_019bfb">
 
             <ImageButton
                 android:id="@+id/ibtn_cancel"

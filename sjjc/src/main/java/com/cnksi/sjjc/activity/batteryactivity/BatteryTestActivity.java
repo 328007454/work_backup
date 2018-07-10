@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.common.Config;
@@ -66,6 +67,7 @@ import java.util.Map;
  *         蓄电池检测界面
  *         2016/8/9 15:56
  */
+@Route(path = "/batteryTest/activity")
 public class BatteryTestActivity extends BaseSjjcActivity {
     public static final String TAG = "BatteryTestActivity";
     public static final int LOAD_BATTERY_SUCCESS = 0x001;

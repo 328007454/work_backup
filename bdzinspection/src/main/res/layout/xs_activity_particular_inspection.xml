@@ -7,13 +7,14 @@
         android:id="@+id/ll_root_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="#019bfb"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_title_bar_minheight_px"
-            android:background="@color/xs_global_base_color">
+            android:background="#019bfb">
 
             <ImageButton
                 android:id="@+id/ibtn_cancel"
@@ -103,29 +104,52 @@
             android:id="@+id/tab_strip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"
-            android:background="@color/xs_tab_strip_background_color" />
+            android:background="@color/xs_tab_strip_background_color"
+            android:visibility="gone" />
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/st_week"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_120px"
+            android:layout_marginTop="22px"
+            android:paddingLeft="@dimen/xs__30px"
+            android:paddingRight="@dimen/xs__30px"
+            app:tl_indicator_color="@color/color_ff8b47"
+            app:tl_indicator_height="5px"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="#fff"
+            app:tl_textUnselectColor="#8DC7FD"
+            app:tl_textsize="39px" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#f3f4f4" />
 
-        <Button
-            android:id="@+id/btn_finish_inspection"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/xs_button_minheight"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16px"
-            android:layout_marginLeft="22px"
-            android:layout_marginRight="22px"
-            android:layout_marginTop="16px"
-            android:background="@drawable/xs_red_button_background_selector"
-            android:gravity="center"
-            android:minHeight="@dimen/xs_button_minheight"
-            android:text="@string/xs_finish_inspection_str"
-            android:textColor="@android:color/white"
-            android:textSize="48px" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#f3f4f4">
+
+            <Button
+                android:id="@+id/btn_finish_inspection"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/xs_button_minheight"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16px"
+                android:layout_marginLeft="22px"
+                android:layout_marginRight="22px"
+                android:layout_marginTop="16px"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_finish_inspection_str"
+                android:textColor="@android:color/white"
+                android:textSize="48px" />
+        </RelativeLayout>
 
     </LinearLayout>
 </layout>

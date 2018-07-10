@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.SpacingService;
@@ -38,6 +39,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
 /**
  * Created by ironGe on 2016/6/16.
  */
+@Route(path = "/getSendLetterReport/activity")
 public class GetSendLetterReportActivity extends BaseReportActivity {
 
     Report currentReport;

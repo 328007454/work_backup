@@ -8,6 +8,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * @author kkk on 2017/12/18.
  */
-
+@Route(path = "/hwcwReport/activity")
 public class NewHwcwReportActivity extends BaseReportActivity {
     ActivityNewHwcwReportBinding mReportBinding;
     Report mReport;

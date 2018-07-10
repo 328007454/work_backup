@@ -1,6 +1,5 @@
 package com.cnksi.defect.utils;
 
-import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.cnksi.common.CommonApplication;
@@ -134,7 +133,8 @@ public class DefectUtils {
         if (d.compareTo(DateUtils.getAfterTime(3)) > 0) {
             return s;
         } else {
-            return StringUtils.changeTextColor(s, Color.RED);
+//            return StringUtils.changeTextColor(s, Color.RED);
+            return s;
         }
     }
 

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:state_pressed="true"><shape>
-            <corners android:radius="@dimen/corner_radius" />
+    <item android:state_pressed="true">
+        <shape>
 
-            <solid android:color="@color/xs_green_pressed_color" />
-        </shape></item>
-    <item android:state_pressed="false"><shape>
-            <corners android:radius="@dimen/corner_radius" />
 
-            <solid android:color="@color/xs_green_color" />
-        </shape></item>
+            <solid android:color="@color/color_d5ecff" />
+        </shape>
+    </item>
+    <item android:state_pressed="false">
+        <shape>
+
+
+            <solid android:color="@color/color_d5eaf7" />
+        </shape>
+    </item>
 </selector>

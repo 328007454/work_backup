@@ -6,14 +6,14 @@
 
             <solid android:color="@android:color/transparent" />
 
-            <stroke android:width="@dimen/xs_line_height" android:color="@color/xs_red_color" />
+            <stroke android:width="@dimen/xs_line_height" android:color="@color/color_f96a6a" />
         </shape></item>
     <item android:state_pressed="true"><shape>
             <corners android:radius="@dimen/xs_half_corner_radius" />
 
             <solid android:color="@color/xs_light_red_color" />
 
-            <stroke android:width="@dimen/xs_line_height" android:color="@color/xs_red_color" />
+            <stroke android:width="@dimen/xs_line_height" android:color="@color/color_f96a6a" />
         </shape></item>
 
 </selector>

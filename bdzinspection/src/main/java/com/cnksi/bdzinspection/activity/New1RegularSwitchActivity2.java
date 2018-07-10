@@ -24,6 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.New1RegularSwitchListAdapter2;
 import com.cnksi.bdzinspection.adapter.SwitchMenuAudioAdapter;
@@ -78,7 +79,7 @@ import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
 import static com.cnksi.common.Config.LOAD_DATA;
 import static com.cnksi.common.Config.LOAD_MORE_DATA;
 import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
-
+@Route(path ="/regularSwitchStrict/activity")
 public class New1RegularSwitchActivity2 extends BaseActivity implements KeyboardChangeListener.KeyBoardListener {
 
     public static final int SYNC_TIME = 0x111;

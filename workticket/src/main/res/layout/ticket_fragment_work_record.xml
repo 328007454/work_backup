@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <com.cnksi.workticket.view.StyleLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.cnksi.common.view.StyleLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:textColor="#ffb5c8c6"
             android:textSize="@dimen/ticket_36px" />
 
-        <com.cnksi.workticket.view.StyleLineLinearLayout
+        <com.cnksi.common.view.StyleLineLinearLayout
             android:layout_width="match_parent"
             android:layout_height="162px"
             android:background="@color/core_bg_white_ffffff"
@@ -55,12 +55,12 @@
                 android:gravity="center"
                 android:text="历史"
                 android:textColor="#c0bab9" />
-        </com.cnksi.workticket.view.StyleLineLinearLayout>
+        </com.cnksi.common.view.StyleLineLinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rec_work"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.cnksi.workticket.view.StyleLineLinearLayout>
+    </com.cnksi.common.view.StyleLineLinearLayout>
 </layout>

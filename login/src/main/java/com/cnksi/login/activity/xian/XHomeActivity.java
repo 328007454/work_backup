@@ -30,7 +30,7 @@ public class XHomeActivity extends BaseTitleActivity implements OnTabSelectListe
 
     LoginActivityHomeBinding homeBinding;
     private final List<String> weekTitles = new ArrayList<>();
-    private final String[] titleTypes = {InspectionType.SBXS.value, InspectionType.RCWH.value, InspectionType.LHSY.value, InspectionType.QXGL.value};
+    private final String[] titleTypes = {InspectionType.SBXS.value, InspectionType.RCWH.value, InspectionType.LHSY.value, InspectionType.QXGL.value,InspectionType.SBJC.value};
     private ArrayList<WeekTaskFragment> mFragments = new ArrayList<>();
     private boolean isNotFirstLoad;
 
@@ -39,6 +39,8 @@ public class XHomeActivity extends BaseTitleActivity implements OnTabSelectListe
         changedStatusColor();
         homeBinding = DataBindingUtil.setContentView(this, R.layout.login_activity_home);
         getIntentValue();
+        String tip = String.format((String) getText(R.string.welcome_login_user), currentDepartmentName, userName);
+        homeBinding.txtLoginName.setText(tip);
         getData();
         initOnClick();
     }
@@ -109,15 +111,15 @@ public class XHomeActivity extends BaseTitleActivity implements OnTabSelectListe
             ActivityUtil.startSync(mActivity);
         });
         homeBinding.includeType.txtTour.setOnClickListener(v -> {
-            ActivityUtil.startTourActivity(mActivity);
+            ActivityUtil.startTourActivity(mActivity,InspectionType.SBXS.name());
         });
 
         homeBinding.includeType.txtMaintance.setOnClickListener(v -> {
-
+            ActivityUtil.startTourActivity(mActivity,InspectionType.maintenance.name());
         });
 
         homeBinding.includeType.txtSwitchover.setOnClickListener(v -> {
-
+            ActivityUtil.startTourActivity(mActivity,InspectionType.switchover.name());
         });
 
         homeBinding.includeType.txtCopy.setOnClickListener(v -> {

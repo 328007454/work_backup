@@ -27,7 +27,6 @@ public class SignNameAdapter extends SimpleBaseAdapter {
     AdapterClickListener listener;
     int MASK = 0x0000;
     private int totoalUserCount;
-
     /**
      * @param context
      * @param dataList

@@ -632,4 +632,8 @@
     <dimen name="xs_dialog_divider_margin_top_px">24px</dimen>
     <dimen name="xs_dialog_button_text_size_px">44px</dimen>
     <dimen name="dimen_120px">120px</dimen>
+    <dimen name="dimen_33px">33px</dimen>
+    <dimen name="dimen_189px">189px</dimen>
+    <dimen name="dimen_522px">522px</dimen>
+    <dimen name="dimen_9px">9px</dimen>
 </resources>

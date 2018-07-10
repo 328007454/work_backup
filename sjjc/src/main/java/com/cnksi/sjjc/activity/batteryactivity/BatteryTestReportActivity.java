@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.common.Config;
@@ -46,6 +47,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/6/17.
  * 蓄电池检测报告
  */
+@Route(path = "/batteryTestReport/Activity")
 public class BatteryTestReportActivity extends BaseReportActivity {
     public static final int LOAD_DATA_FAILURE = 0x1000;
     public static final int LOAD_BATTERY = LOAD_DATA_FAILURE + 1;

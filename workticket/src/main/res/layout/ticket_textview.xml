@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <com.cnksi.workticket.view.StyleLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.cnksi.common.view.StyleLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="120px"
@@ -28,5 +28,5 @@
             android:layout_height="3px"
             android:background="@color/global_text_color" />
 
-    </com.cnksi.workticket.view.StyleLineLinearLayout>
+    </com.cnksi.common.view.StyleLineLinearLayout>
 </layout>

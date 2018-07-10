@@ -58,7 +58,7 @@ public class DeviceSelectFragment extends BaseCoreFragment {
         config = hostActivity.getSelectConfig();
         binding = (CommonRecyclerViewBinding) fragmentDataBinding;
         qwerKeyBoardUtils = new QWERKeyBoardUtils(mActivity);
-        qwerKeyBoardUtils.init(binding.llRootContainer, (v, oldKey, newKey) -> {
+        qwerKeyBoardUtils.initOtherSerchView(binding.llRootContainer, (v, oldKey, newKey) -> {
             searchKey = newKey;
             search();
         });

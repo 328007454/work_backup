@@ -47,6 +47,7 @@ public class WeekTaskFragment extends BaseFragment {
         return weekTaskFragment;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         weekTaskBinding = LoginFragmentWeekTaskBinding.inflate(inflater, container, false);

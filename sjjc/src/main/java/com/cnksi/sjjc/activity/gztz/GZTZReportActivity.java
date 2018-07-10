@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
 import com.cnksi.core.utils.ToastUtils;
@@ -24,6 +25,7 @@ import org.xutils.ex.DbException;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
+@Route(path = "/gztzReport/activity")
 public class GZTZReportActivity extends BaseReportActivity {
     GztzReportBinding binding;
     Report report;

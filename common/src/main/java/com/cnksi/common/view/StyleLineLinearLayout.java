@@ -1,4 +1,4 @@
-package com.cnksi.workticket.view;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +10,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.cnksi.workticket.R;
+import com.cnksi.common.R;
+
 
 /**
  * @decrption 自定义linearlayout可以画边线
@@ -91,6 +92,8 @@ public class StyleLineLinearLayout extends LinearLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
+        height = getMeasuredHeight();
+        width = getMeasuredWidth();
     }
 
     @Override

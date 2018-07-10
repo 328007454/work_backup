@@ -131,6 +131,50 @@ public class DeviceService extends BaseService<Device> {
 
     }
 
+    public List<DbModel> findAllDeviceByName(String bdzId, String keyWord, String deviceType, String inspectionType, String currentReportId, String deviceWay) {
+        String spaceSort = PMSDeviceType.one.equals(deviceType) ? Spacing.SORT_ONE
+                : PMSDeviceType.second.equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
+        String pinyin = PMSDeviceType.second.equals(deviceType) ? "name" : "name_short";
+
+        String sql = "SELECT s.name || ' ' || d." + pinyin + " AS search_key,s.latitude as slat,s.longitude as slot, d.qr_code as qrcode," +
+                "s.name_pinyin as " + SPACING_PY_KEY +
+                ",d.dtid" +
+                ",s.name as " + SPACING_NAME_KEY +
+                ", d." + pinyin + " as " + DEVICE_PY_KEY +
+                ",d.deviceid as " + DEVICE_ID_KEY +
+                ",d.name_short as " + DEVICE_SHORT_NAME_KEY +
+                ",d.name as " + DEVICE_NAME_KEY +
+                ",d.latitude,d.longitude,d.is_important,"
+                + "	s.spid,	s.type as spaceType,s.group_id FROM	device d " +
+                " LEFT JOIN (select ROWID as assist_sort ,* from spacing) s ON d.spid = s.spid"
+                + " WHERE d.bdzid = ?";
+        sql += "AND d.device_type = ?";
+        if ("bigtype_device".equalsIgnoreCase(deviceWay)) {
+            sql += "and d.bigid in (select bigid from standard_special where kind = '" + inspectionType + "' and dlt = 0 )";
+        }
+        if ("select_device".equalsIgnoreCase(deviceWay)) {
+            Report currentReport = ReportService.getInstance().getReportById(currentReportId);
+            String devices = "'" + (currentReport == null ? "" : currentReport.selected_deviceid) + "'";
+            devices = devices.replace(",", "','");
+            sql += " and d.deviceid in (" + devices + ")";
+        }
+        sql += " and s.dlt='0' AND d.dlt != 1 ORDER BY s." + spaceSort + " , s.assist_sort, d.sort";
+
+        if (!TextUtils.isEmpty(keyWord)) {
+            sql = "select * from (" + sql + ") as t where t.search_key like '%" + keyWord + "%'";
+        }
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
+        sqlInfo.addBindArg(new KeyValue("", deviceType));
+        try {
+            return findDbModelAll(sqlInfo);
+        } catch (DbException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 
     public List<DbModel> findSpaceDeviceByType(String bdzId, String deviceType, List<String> bigtypes, String filter) {
         String bigTypeStr = "";
@@ -143,12 +187,12 @@ public class DeviceService extends BaseService<Device> {
         String spaceSort = PMSDeviceType.one.equals(deviceType) ? Spacing.SORT_ONE
                 : PMSDeviceType.second.equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
         String pinyin = PMSDeviceType.second.equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
-        String sql = "select s.name_pinyin||' '||d." + pinyin + " as search_key," +
+        String sql = "select s.name||' '||d.name as search_key," +
                 "d.is_important," +
                 "d.dtid dtid," +
                 "s.name_pinyin as " + SPACING_PY_KEY +
                 ",s.name as " + SPACING_NAME_KEY +
-                ", d." + pinyin + " as " + DEVICE_PY_KEY +
+                ", d.name  as " + DEVICE_PY_KEY +
                 ",d.deviceid as " + DEVICE_ID_KEY +
                 ",d.name_short as " + DEVICE_SHORT_NAME_KEY +
                 ",d.name as " + DEVICE_NAME_KEY +
@@ -247,7 +291,7 @@ public class DeviceService extends BaseService<Device> {
      */
     public HashMap<String, DefectInfo> findDeviceDefect(String bdzid) {
         String sql = "SELECT" + "	*,count(1) as defect_count_key  FROM(SELECT "
-                + "deviceid,defectlevel	FROM	defect_record		WHERE 		bdzid = ?"
+                + "deviceid,defectlevel	,spid FROM	defect_record		WHERE 		bdzid = ?"
                 + "		AND has_track = 'N'"
                 + "		AND has_remove = 'N'	AND (val = '' OR val IS NULL)  AND (dlt = '0' OR dlt is NULL)	ORDER BY"
                 + "			deviceid,	defectlevel ASC) t GROUP BY 	t.deviceid";
@@ -261,7 +305,7 @@ public class DeviceService extends BaseService<Device> {
                 for (DbModel model : mDeviceList) {
                     map.put(model.getString(DefectRecord.DEVICEID),
                             new DefectInfo(model.getString(DefectRecord.DEVICEID),
-                                    model.getString(DefectRecord.DEFECTLEVEL), model.getString("defect_count_key")));
+                                    model.getString(DefectRecord.DEFECTLEVEL), model.getString("defect_count_key"),model.getString("spid")));
                 }
             }
         } catch (DbException e) {

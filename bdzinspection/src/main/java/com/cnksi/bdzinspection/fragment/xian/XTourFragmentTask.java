@@ -13,12 +13,20 @@ import com.cnksi.bdzinspection.adapter.xian.HomeWeekTaskAdapter;
 import com.cnksi.bdzinspection.databinding.BdzinspectionFragmentTourTaskBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.WeekTime;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.RouterActivityUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
+
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +37,7 @@ import java.util.List;
 
 public class XTourFragmentTask extends BaseFragment {
     BdzinspectionFragmentTourTaskBinding tourTaskBinding;
-    private String title;
+    private String title = "";
     private String inspectionType;
     private List<Task> taskList = new ArrayList<>();
     private HomeWeekTaskAdapter homeWeekTaskAdapter;
@@ -72,6 +80,7 @@ public class XTourFragmentTask extends BaseFragment {
             mActivity.runOnUiThread(() -> {
                 if (countInterface != null) {
                     countInterface.taskTotal(taskList, fragmentPosition);
+                    lazyLoad();
                 }
             });
         });
@@ -100,8 +109,27 @@ public class XTourFragmentTask extends BaseFragment {
 
     private void initClickCallBack() {
         homeWeekTaskAdapter.setOnItemClickListener((adapter, view, position) -> {
-            startTask((Task) adapter.getItem(position));
+            Task task = (Task) adapter.getItem(position);
+            if (inspectionType.contains(InspectionType.SBJC.name())) {
+                startTaskCopyModel(task);
+            }
+//            else if (inspectionType.contains(InspectionType.maintenance.name()) || inspectionType.contains(InspectionType.switchover.name())) {
+//                startSwitchOverTask(task);
+//            }
+            else {
+                startTask(task);
+            }
         });
+    }
+
+    private void startSwitchOverTask(Task task) {
+        try {
+            Report report = ReportService.getInstance().getReportByTask(task.taskid);
+            Bdz bdz = BdzService.getInstance().findById(task.bdzid);
+            RouterActivityUtils.startSwitchOverModel(task, report.reportid, bdz.folder);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -117,6 +145,17 @@ public class XTourFragmentTask extends BaseFragment {
         intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, task.inspection_name);
         intent.putExtra("task_id", task.taskid);
         startActivity(intent);
+    }
+
+    private void startTaskCopyModel(Task task) {
+        try {
+            Report report = ReportService.getInstance().getReportByTask(task.taskid);
+            Bdz bdz = BdzService.getInstance().findById(task.bdzid);
+            RouterActivityUtils.startCopyModel(task, report.reportid, bdz.folder);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

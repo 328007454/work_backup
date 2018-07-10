@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
@@ -36,6 +37,7 @@ import static com.cnksi.sjjc.R.id.add_indoor_weather;
 /**
  * 修改后的室内温湿度界面
  */
+@Route(path = "/indoorHumitrue/activity")
 public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity {
 
     //报告表

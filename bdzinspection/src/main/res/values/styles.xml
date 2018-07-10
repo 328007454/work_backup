@@ -164,12 +164,13 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">left|center_vertical</item>
-        <item name="android:textColor">#333333</item>
+        <item name="android:textColor">@color/color_3c4950</item>
         <item name="android:textSize">@dimen/xs_global_text_small_size_px</item>
     </style>
 
     <style name="GPInspectionRusltValueTextStyle">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/xs__39px</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
         <item name="android:gravity">left|center_vertical</item>
@@ -182,7 +183,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:clickable">true</item>
-        <item name="android:gravity">center_horizontal</item>
+
         <item name="android:orientation">vertical</item>
     </style>
 

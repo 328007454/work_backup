@@ -61,6 +61,7 @@ public class ArriveCheckHelper {
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private DeviceAdapter deviceAdapter;
     private String currentFunctionModel;
+    private String picName;
 
     public ArriveCheckHelper(Activity activity, DeviceAdapter adapter, String reportId, final String currentInspectionType, final String bdzId, final String mode) {
         currentActivity = activity;
@@ -235,6 +236,26 @@ public class ArriveCheckHelper {
         return arrivedDevices;
     }
 
+    public void saveLocation(DbModel model, BDLocation location, boolean isSpace, String fileName) {
+        picName = fileName;
+        if (isSpace) {
+            final String spid = model.getString(Spacing.SPID);
+            if (!arrivedPlaces.containsKey(spid) && !SystemConfig.isDevicePlaced()) {
+                Placed placed = new Placed(currentReportId, bdzId, spid, model.getString(DeviceService.SPACING_NAME_KEY), 1, 0, 0);
+                placed.pic = picName;
+                arrivedPlaces.put(spid, placed);
+                finalPlaced = placed;
+            }
+            deviceAdapter.setArriveSpaceIdList(getArrivedSpids());
+            deviceAdapter.notifyDataSetChanged();
+            ExecutorManager.executeTask(() -> {
+                if (null != finalPlaced) {
+                    PlacedService.getInstance().saveOrUpdate(finalPlaced);
+                }
+            });
+        }
+    }
+
     public void saveLocation(DbModel model, BDLocation location, boolean isSpace) {
         final String lat = String.valueOf(location.getLatitude());
         final String lng = String.valueOf(location.getLongitude());
@@ -247,6 +268,7 @@ public class ArriveCheckHelper {
             //设备到位模式下 直接标记到位不适用。
             if (!arrivedPlaces.containsKey(spid) && !SystemConfig.isDevicePlaced()) {
                 Placed placed = new Placed(currentReportId, bdzId, spid, model.getString(DeviceService.SPACING_NAME_KEY), 1, location.getLatitude(), location.getLongitude());
+                placed.pic = picName;
                 arrivedPlaces.put(spid, placed);
                 finalPlaced = placed;
             }
@@ -305,7 +327,7 @@ public class ArriveCheckHelper {
     /**
      * 在设备到位模式下 间隔下所有设备到位则将间隔标记为到位
      */
-    public synchronized void  handleSpaceArrivedData() {
+    public synchronized void handleSpaceArrivedData() {
         if (SystemConfig.isDevicePlaced() && "one".equals(currentFunctionModel)) {
             List<Placed> saveList = new ArrayList<>();
             Iterator<MultiItemEntity> itemEntityIterator = deviceAdapter.getData().iterator();

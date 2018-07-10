@@ -17,27 +17,28 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.daoservice.DeviceService;
-import com.cnksi.common.enmu.PMSDeviceType;
-import com.cnksi.common.listener.ItemLongClickListener;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
+import com.cnksi.common.Config;
+import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemLongClickListener;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.model.SpacingGroup;
+import com.cnksi.common.model.vo.DefectInfo;
 import com.cnksi.common.model.vo.DeviceItem;
 import com.cnksi.common.model.vo.SpaceGroupItem;
 import com.cnksi.common.model.vo.SpaceItem;
-import com.cnksi.common.view.UnderLineLinearLayout;
-import com.cnksi.common.Config;
-import com.cnksi.common.SystemConfig;
-import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.model.Device;
-import com.cnksi.common.model.vo.DefectInfo;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.common.view.UnderLineLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -89,6 +90,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     private boolean isSecondDevice;
     private boolean isOnlyExpandOne = true;
     private MultiItemEntity lastExpandIndex = null;
+    private Map<String, Integer> spaceDefctCount = new HashMap<>();
 
 
     private ItemClickListener<DbModel> groupItemClickListener;
@@ -98,6 +100,8 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     private ItemClickListener<DbModel> copyClickListener;
     private ItemClickListener<SpacingGroup> groupItemListener;
     private String inspectionType;
+    private boolean hasLocation = false;
+    private HashSet<String> hasQrCodeSpids = new HashSet<>();
 
 
     /**
@@ -118,12 +122,16 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     protected void convert(final BaseViewHolder helper, final MultiItemEntity item) {
         switch (helper.getItemViewType()) {
             case SPACE_GROUP_ITEM:
-                final SpaceGroupItem spaceGroupItem = (SpaceGroupItem) item;
-                convertSpaceGroup(helper, spaceGroupItem);
+                if (item instanceof SpaceGroupItem) {
+                    final SpaceGroupItem spaceGroupItem = (SpaceGroupItem) item;
+                    convertSpaceGroup(helper, spaceGroupItem);
+                }
                 break;
             case SPACE_ITEM:
-                final SpaceItem spaceItem = (SpaceItem) item;
-                convertSpace(helper, spaceItem);
+                if (item instanceof SpaceItem) {
+                    final SpaceItem spaceItem = (SpaceItem) item;
+                    convertSpace(helper, spaceItem);
+                }
                 break;
             case DEVICE_ITEM:
                 final DeviceItem deviceItem = (DeviceItem) item;
@@ -141,10 +149,11 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         txtSpace.setText(group.name + "(" + groupItem.getSubSize() + ")");
         ImageView imgOpen = helper.getView(R.id.img_open);
         imgOpen.setImageResource(groupItem.isExpanded() ? R.drawable.xs_ic_shrink : R.drawable.xs_ic_open);
+
         if (groupSnwsds.contains(group.id)) {
-            imgCopy.setImageResource(R.drawable.ic_green_finish);
+            imgCopy.setImageResource(R.drawable.ic_white_finish);
         } else {
-            imgCopy.setImageResource(R.drawable.ic_green_unfinish);
+            imgCopy.setImageResource(R.drawable.ic_white_unfinish);
         }
         if (!TextUtils.isEmpty(SystemConfig.getCopyInspection()) && SystemConfig.getCopyInspection().contains(currentInspection) && group.copy) {
             imgCopy.setVisibility(View.VISIBLE);
@@ -170,7 +179,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         final int position = helper.getAdapterPosition();
         final DbModel space = spaceItem.spacing;
         TextView txtSpace = helper.getView(R.id.tv_group_item);
-        ImageView imgOpen = helper.getView(R.id.img_open);
         ImageView imgLocation = helper.getView(R.id.iv_haslocationed);
         final ImageView imgSpaceCopy = helper.getView(R.id.ibt_copy_pen);
         String spaceId = space.getString(Device.SPID);
@@ -182,28 +190,48 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             txtSpace.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getPercentWidthSize(42));
             ((UnderLineLinearLayout) helper.itemView).setMarginLeft(AutoUtils.getPercentHeightSize(30));
         }
-        // 间隔到位
-        boolean spaceArrived;
-        if (SystemConfig.isDevicePlaced()) {
-            spaceArrived = handleDevicePlaced(spaceItem);
-            txtSpace.setTextColor(context.getResources().getColor(spaceArrived ? R.color.xs_global_text_color : R.color.xs_green_color));
-        } else {
-            handleDevicePlaced(spaceItem);
-            spaceArrived = isOneDevice && arriveSpaceIdList != null && arriveSpaceIdList.contains(spaceId);
-            txtSpace.setTextColor(context.getResources().getColor(spaceArrived ? R.color.xs_global_text_color : R.color.xs_green_color));
-        }
-        imgLocation.setVisibility(View.GONE);
+        imgLocation.setImageResource(R.mipmap.ic_no_location);
+        imgLocation.setTag(null);
         if (!StringUtilsExt.isEmptys(space.getString("slat"), space.getString("slot"))
                 && isOneDevice) {
-            imgLocation.setVisibility(View.VISIBLE);
+            imgLocation.setImageResource(R.mipmap.ic_has_location);
+            imgLocation.setTag(true);
+            hasLocation = true;
         }
+
+        TextView txtSpaceCount = helper.getView(R.id.txt_defect_count);
+        txtSpaceCount.setVisibility(View.GONE);
+        if (!spaceDefctCount.isEmpty()) {
+            if (spaceDefctCount.keySet().contains(spaceId)) {
+                txtSpaceCount.setText(String.valueOf(spaceDefctCount.get(spaceId)));
+                txtSpaceCount.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        // 间隔到位
+        boolean spaceArrived;
+        if (SystemConfig.isDevicePlaced() && hasLocation) {
+            spaceArrived = handleDevicePlaced(spaceItem);
+            imgLocation.setImageResource(spaceArrived ? R.mipmap.ic_already_location : R.mipmap.ic_has_location);
+        } else if (hasLocation) {
+            handleDevicePlaced(spaceItem);
+            spaceArrived = isOneDevice && arriveSpaceIdList != null && arriveSpaceIdList.contains(spaceId);
+            imgLocation.setImageResource(spaceArrived ? R.mipmap.ic_already_location : R.mipmap.ic_has_location);
+        }
+        if (hasQrCodeSpids != null && hasQrCodeSpids.contains(spaceId)) {
+            imgLocation.setImageResource(R.mipmap.ic_rfid_location);
+            imgLocation.setTag(null);
+        }
+        hasLocation = false;
+
         //处理间隔抄录
         if ("Y".equals(space.getString("hasCopy"))) {
             imgSpaceCopy.setVisibility(View.VISIBLE);
             if ("Y".equals(space.getString("copyFinish"))) {
-                imgSpaceCopy.setImageResource(R.drawable.ic_green_finish);
+                imgSpaceCopy.setImageResource(R.drawable.ic_white_finish);
             } else {
-                imgSpaceCopy.setImageResource(R.drawable.ic_green_unfinish);
+                imgSpaceCopy.setImageResource(R.drawable.ic_white_unfinish);
             }
         } else {
             imgSpaceCopy.setVisibility(View.GONE);
@@ -231,8 +259,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         int childCount = spaceItem.getSubItems().size();
         spacingName += "(" + childCount + ")";
         txtSpace.setText(Html.fromHtml(spacingName));
-        // 间隔展开
-        imgOpen.setImageResource(spaceItem.isExpanded() ? R.drawable.xs_ic_shrink : R.drawable.xs_ic_open);
         // 间隔点击
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
@@ -253,6 +279,12 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         imgSpaceCopy.setOnClickListener(view -> {
             if (groupItemClickListener != null) {
                 groupItemClickListener.onClick(view, space, position);
+            }
+        });
+
+        imgLocation.setOnClickListener(v -> {
+            if (groupItemClickListener != null) {
+                groupItemClickListener.onClick(v, space, position);
             }
         });
     }
@@ -277,7 +309,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             }
         }
         //恢复Item默认状态
-        txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));// 默认绿色
+        txtDevice.setTextColor(context.getResources().getColor(R.color.color_2cc2ea));// 默认绿色
         helper.getView(R.id.rl_device_container).setBackgroundResource(R.drawable.xs_device_green_border_background_selector);
         helper.getView(R.id.tv_device_defect_count).setVisibility(View.GONE);// 不显示缺陷数量
         // 摇一摇动画切换
@@ -294,7 +326,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                 startAnimation(helper.getView(R.id.rl_device_container), 0f, 1f);
             }
         } else {
-            txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));
+            txtDevice.setTextColor(context.getResources().getColor(R.color.color_2cc2ea));
             helper.getView(R.id.rl_device_container).setBackgroundResource(R.drawable.xs_device_green_border_background_selector);
             // 显示抄录
             showCopyAndArrived(item, helper);
@@ -374,7 +406,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         if ("Y".equals(item.getString("hasCopy"))) {
             ibCopy.setVisibility(View.VISIBLE);
             btCopy.setVisibility(View.VISIBLE);
-            ibCopy.setImageResource("Y".equals(item.getString("isCopy")) ? R.drawable.xs_ic_black_finish : R.drawable.ic_green_unfinish);
+            ibCopy.setImageResource("Y".equals(item.getString("isCopy")) ? R.drawable.xs_ic_black_finish : R.drawable.ic_c2c2ea_unfinish);
         } else {
             ibCopy.setVisibility(View.INVISIBLE);
             btCopy.setVisibility(View.GONE);
@@ -495,8 +527,20 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         this.arriveDeviceList = arriveDeviceList;
     }
 
+
     public void setDefectMap(HashMap<String, DefectInfo> defectMap) {
         this.defectmap = defectMap;
+        spaceDefctCount.clear();
+        Collection<DefectInfo> defectInfos = defectMap.values();
+        if (!defectInfos.isEmpty()) {
+            for (DefectInfo defectInfo : defectInfos) {
+                if (!TextUtils.isEmpty(defectInfo.spid) && spaceDefctCount.containsKey(defectInfo.spid)) {
+                    spaceDefctCount.put(defectInfo.spid, spaceDefctCount.get(defectInfo.spid) + Integer.valueOf(defectInfo.defectCount));
+                } else if (!TextUtils.isEmpty(defectInfo.spid)) {
+                    spaceDefctCount.put(defectInfo.spid, Integer.valueOf(defectInfo.defectCount));
+                }
+            }
+        }
     }
 
     public void setCopyDeviceIdList(HashSet<String> copyDeviceIdList) {
@@ -577,5 +621,14 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
     public void setShowOnly(boolean showOnly) {
         this.isOnlyExpandOne = showOnly;
+    }
+
+    public void setHasQrCodeSpids(HashSet<String> spaceIds) {
+        if (hasQrCodeSpids == null) {
+            hasQrCodeSpids = new HashSet<>();
+        }
+        hasQrCodeSpids.clear();
+        hasQrCodeSpids = spaceIds;
+
     }
 }

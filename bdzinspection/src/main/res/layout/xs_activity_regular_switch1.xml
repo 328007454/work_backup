@@ -5,6 +5,8 @@
                   android:id="@+id/ll_root_container"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true"
                   android:orientation="vertical">
 
         <include
@@ -29,12 +31,14 @@
             android:visibility="visible"/>
 
         <android.support.v7.widget.RecyclerView
+            android:background="@color/color_f3f4f4"
             android:id="@+id/recy_audio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/xs__30px"/>
 
         <ExpandableListView
+            android:background="@color/color_f3f4f4"
             android:id="@+id/lv_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -53,21 +57,29 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
 
-        <Button
-            android:id="@+id/btn_complete"
+
+        <RelativeLayout
+            android:background="@color/color_f3f4f4"
             android:layout_width="match_parent"
-            android:layout_height="118px"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
-            android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-            android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
-            android:background="@drawable/xs_red_button_background_selector"
-            android:gravity="center"
-            android:minHeight="@dimen/xs_button_minheight"
-            android:text="@string/xs_complete_str"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/xs_global_text_size_px"/>
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_complete"
+                android:layout_width="match_parent"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_complete_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 </layout>

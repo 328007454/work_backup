@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.daoservice.DeviceService;
@@ -31,6 +32,7 @@ import java.util.List;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
+@Route(path = "/tzqk/activity")
 public class TZQKActivity extends BaseSjjcActivity {
     ActivityGztzBaseBinding binding;
     SbjcGztzjl sbgzjl;

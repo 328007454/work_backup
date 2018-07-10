@@ -5,7 +5,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/xs_gray_background_color"
+        android:background="@color/color_edf6fc"
         android:gravity="center_vertical"
         android:minHeight="100px"
         android:orientation="horizontal">

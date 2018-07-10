@@ -75,7 +75,7 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
         ImageView ibCopy = helper.getView(R.id.ibt_copy_pen);
         helper.getView(R.id.tv_device_defect_count).setVisibility(View.GONE);
         txtDevice.setText(item.getString("name"));
-        txtDevice.setTextColor(mContext.getResources().getColor(R.color.xs_green_color));
+        txtDevice.setTextColor(mContext.getResources().getColor(R.color.color_2cc2ea));
         RelativeLayout relativeLayout = helper.getView(R.id.rl_device_container);
         relativeLayout.setMinimumHeight(AutoUtils.getPercentHeightSizeBigger(105));
         relativeLayout.setMinimumWidth(AutoUtils.getPercentWidthSizeBigger(270));
@@ -83,8 +83,7 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
             txtDevice.setTextColor(mContext.getResources().getColor(R.color.xs_white));
 //			txtDevice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_white_unfinish, 0, 0, 0);
             ibCopy.setImageResource(R.drawable.ic_white_unfinish);
-            helper.getView(R.id.rl_device_container)
-                    .setBackgroundResource(R.drawable.xs_copy_all_value_item_selected_background);
+            relativeLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_2cc2ea));
         } else {
             // 有一项抄录变绿
             if (copyDeviceIds.contains(item.getString("deviceid"))) {
@@ -92,11 +91,11 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
                 txtDevice.setTextColor(mContext.getResources().getColor(R.color.xs_global_text_color));
                 relativeLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.xs_device_black_border_background_selector));
             } else {
-                relativeLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.xs_device_green_border_background_selector));
-                txtDevice.setTextColor(mContext.getResources().getColor(R.color.xs_green_color));
+                relativeLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.xs_device_black_border_background_selector));
+                txtDevice.setTextColor(mContext.getResources().getColor(R.color.color_2cc2ea));
                 ibCopy.setImageResource(R.drawable.ic_green_unfinish);
                 helper.getView(R.id.rl_device_container)
-                        .setBackgroundResource(R.drawable.xs_copy_all_value_item_unselected_background_selector);
+                        .setBackgroundResource(R.drawable.xs_device_green_border_background_selector);
             }
         }
 

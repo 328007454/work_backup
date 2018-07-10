@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.ReportService;
@@ -57,6 +58,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by ironGe on 2016/6/12.
  * 收发信息界面
  */
+@Route(path = "/getSendLetter/activity")
 public class GetSendLetterActivity extends BaseSjjcActivity {
     public static final String TAG = GetSendLetterActivity.class.getSimpleName();
     public static final int LOAD_DEVICE_SUCCESS = 0x100;

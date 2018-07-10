@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -179,9 +180,13 @@ public class TypeListActivity extends BaseSjjcActivity {
                     }
                     break;
                 case SBJC:
-                    intent.setClass(mActivity, TaskRemindActivity.class);
-                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE, SBJCInspectionMap.get(s));
-                    break;
+                    ARouter.getInstance().build("/xian/tourActivity")
+                            .withString(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""))
+                            .withString(Config.INSPECTION_TYPE,SBJCInspectionMap.get(s))
+                            .withString(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "")).navigation();
+//                    intent.setClass(mActivity, TaskRemindActivity.class);
+//                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE, SBJCInspectionMap.get(s));
+                    return;
                 case switchover:
                     return;
                 case maintenance:

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -13,19 +15,18 @@
 
             <include
                 android:id="@+id/include_title"
-                layout="@layout/xs_include_title"/>
+                layout="@layout/xs_include_title" />
 
             <RelativeLayout
                 android:id="@+id/rl_copy_all_value_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/xs_gray_background_color"
-                >
+                android:background="@color/xs_gray_background_color">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rcv"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
                 <!--<GridView-->
                 <!--android:id="@+id/gv_container"-->
                 <!--android:layout_width="match_parent"-->
@@ -53,7 +54,7 @@
                     android:background="@drawable/xs_gray_button_background_selector"
                     android:contentDescription="@null"
                     android:padding="@dimen/xs_twelve_oval_size_px"
-                    android:src="@drawable/xs_ic_amplify"/>
+                    android:src="@mipmap/icon_full_screen" />
             </RelativeLayout>
 
 
@@ -70,7 +71,7 @@
                     android:layout_height="340px"
                     android:layout_above="@+id/btn_layout"
                     android:orientation="horizontal"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -86,7 +87,7 @@
                         android:divider="@color/xs_line_color"
                         android:dividerHeight="@dimen/xs_line_half_width_px"
                         android:orientation="vertical"
-                        android:showDividers="middle"/>
+                        android:showDividers="middle" />
                 </ScrollView>
 
                 <LinearLayout
@@ -104,34 +105,34 @@
                         android:id="@+id/btn_pre"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="118px"
+                        android:layout_height="100px"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:background="@drawable/xs_grass_green_button_background_selector"
+                        android:background="@drawable/button_selector_f96a6a"
                         android:drawableLeft="@drawable/xs_ic_pre_page"
                         android:gravity="center"
                         android:minHeight="@dimen/xs_button_minheight"
                         android:paddingLeft="@dimen/xs_global_padding_left_right_px"
                         android:text="@string/xs_pre"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/xs_global_text_size_px"/>
+                        android:textSize="@dimen/xs_global_text_size_px" />
 
                     <Button
                         android:id="@+id/btn_next"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="118px"
+                        android:layout_height="100px"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
                         android:layout_weight="1"
-                        android:background="@drawable/xs_grass_green_button_background_selector"
+                        android:background="@drawable/selector_019bfb"
                         android:drawableRight="@drawable/xs_ic_next_page"
                         android:gravity="center"
                         android:minHeight="@dimen/xs_button_minheight"
                         android:paddingRight="@dimen/xs_global_padding_left_right_px"
                         android:text="@string/xs_next"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/xs_global_text_size_px"/>
+                        android:textSize="@dimen/xs_global_text_size_px" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -144,6 +145,6 @@
             android:gravity="center"
             android:textColor="@color/xs_white_text"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
     </FrameLayout>
 </layout>

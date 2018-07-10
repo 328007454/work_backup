@@ -12,7 +12,7 @@
         <activity
             android:name="com.cnksi.defect.activity.OperateDefectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
             android:name="com.cnksi.defect.activity.DefectControlActivity"

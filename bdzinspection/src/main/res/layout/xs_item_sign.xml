@@ -1,83 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <layout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="360px"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/xs_miaobian_gray_background"
-    android:orientation="vertical">
+<layout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="24px"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="張三"
-            android:textColor="@color/xs_global_base_color"
-            android:textSize="@dimen/xs_global_text_small_size_px" />
-
-        <ImageView
-            android:id="@+id/del"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/xs_delete_standard_selector" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="90px"
-        android:layout_marginBottom="18px"
-        android:layout_marginLeft="18px"
-        android:layout_marginRight="18px"
-        android:orientation="vertical">
-
-        <ImageView
-            android:scaleType="centerInside"
-            android:id="@+id/signImg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/xs_ic_launcher"
-            android:visibility="gone" />
+    <com.cnksi.common.view.StyleLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="@dimen/dimen_522px"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/txt_size36px"
+        android:paddingLeft="@dimen/xs__30px"
+        android:paddingRight="@dimen/xs__30px"
+        android:paddingTop="45px"
+        >
 
         <LinearLayout
-
-            android:id="@+id/ll_container_sign"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/xs_green_button_background_selector"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
-                app:srcCompat="@drawable/xs_ic_sign"
-                android:id="@+id/signImg_pic"
-                android:layout_width="61px"
-                android:layout_height="61px"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="60px"
-                android:scaleType="centerInside"
-                android:visibility="visible" />
-
             <TextView
-                android:id="@+id/tv_czr_sign"
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="張三"
+                android:textColor="@color/color_3c4950"
+                android:textSize="@dimen/dimen_33px" />
+
+            <ImageView
+                android:id="@+id/del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/xs_delete_standard_selector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_size36px"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/signImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/xs_ic_launcher"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_container_sign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18px"
-                android:layout_marginRight="18px"
-                android:drawablePadding="@dimen/xs_drawable_padding_px"
-                android:gravity="left|center_vertical"
-                android:minHeight="@dimen/xs_czp_sign_minheight_px"
-                android:paddingRight="60px"
-                android:text="@string/xs_gp_signname"
-                android:textColor="@color/xs_white"
-                android:textSize="@dimen/xs_global_text_small_size_px" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_czr_sign"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="18px"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/xs_drawable_padding_px"
+                    android:gravity="left|center_vertical"
+                    android:minHeight="@dimen/xs_czp_sign_minheight_px"
+                    android:paddingRight="60px"
+                    android:text="点击按钮进行签名"
+                    android:textColor="@color/color_d6d6d6"
+                    android:textSize="@dimen/xs__39px" />
+
+                <ImageView
+                    android:id="@+id/signImg_pic"
+                    android:layout_width="85px"
+                    android:layout_height="75px"
+                    android:background="@drawable/shape_color_72a4ff"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/icon_add_signname"
+
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</LinearLayout></layout>
+    </com.cnksi.common.view.StyleLineLinearLayout>
+</layout>

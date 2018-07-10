@@ -25,7 +25,7 @@
                 android:background="@color/white"
                 android:id="@+id/type_container"
                 android:layout_width="match_parent"
-                android:layout_height="170px"
+                android:layout_height="130px"
                 android:orientation="horizontal"
                 android:padding="30px">
 

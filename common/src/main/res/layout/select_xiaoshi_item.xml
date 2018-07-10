@@ -7,7 +7,7 @@
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/xs_gray_background_color"
+        android:background="@color/color_edf6fc"
         android:orientation="horizontal"
         app:drawUnderLine="true"
         app:lineColor="@color/xs_line_color"
@@ -19,13 +19,13 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/xs_gray_background_color"
+            android:background="@color/color_edf6fc"
             android:gravity="center_vertical"
             android:minHeight="@dimen/xs_device_space_larger_height_px"
             android:paddingBottom="@dimen/xs_text_button_padding_top_px"
             android:paddingLeft="@dimen/xs_global_padding_left_right_px"
             android:paddingTop="@dimen/xs_text_button_padding_top_px"
-            android:textColor="@color/xs_green_color"
+            android:textColor="#626262"
             android:textSize="@dimen/xs_global_text_size_px"/>
 
         <!-- 设备名称 -->
@@ -43,7 +43,7 @@
             android:contentDescription="@null"
             android:scaleType="centerInside"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_green_unfinish"/>
+            app:srcCompat="@drawable/ic_white_unfinish"/>
 
         <ImageView
             android:id="@+id/iv_haslocationed"

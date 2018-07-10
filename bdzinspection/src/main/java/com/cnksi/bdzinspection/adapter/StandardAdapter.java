@@ -42,9 +42,9 @@ public class StandardAdapter extends SimpleBaseAdapter {
         } else {
             itemBinding = DataBindingUtil.findBinding(convertView);
         }
-        itemBinding.llContainer.setMinimumHeight(AutoUtils.getPercentHeightSizeBigger(162));
+        itemBinding.llContainer.setMinimumHeight(AutoUtils.getPercentHeightSizeBigger(140));
         itemBinding.tvStandardName.setTextColor(mContext.getResources().getColor(R.color.xs_light_black));
-        itemBinding.tvStandardName.setTextColor(getColor(isMarkStandard(mInspectionStandard) ? R.color.xs_global_gray_text_color : R.color.xs_global_base_color));
+        itemBinding.tvStandardName.setTextColor(getColor(isMarkStandard(mInspectionStandard) ? R.color.xs_global_gray_text_color : R.color.color_3c4950));
         itemBinding.tvStandardName.setText(String.valueOf(position + 1) + "、" + mInspectionStandard.getString(Standards.DESCRIPTION));
         return itemBinding.getRoot();
     }

@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
+import com.cnksi.bdzinspection.activity.xian.XFullDeviceListActivity;
+import com.cnksi.bdzinspection.activity.xian.XParticularDeviceListActivity;
 import com.cnksi.bdzinspection.daoservice.InspectionPreparedService;
 import com.cnksi.bdzinspection.daoservice.ZzhtService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReadyBinding;
@@ -28,6 +30,7 @@ import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.CommonUtils;
@@ -290,9 +293,9 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentInspectionType);
             if (isParticularInspection()) {
                 // 大风 大雾 下雪 雷雨 高温 夜间 熄灯
-                intent.setClass(mActivity, ParticularDeviceListActivity.class);
+                intent.setClass(mActivity, XParticularDeviceListActivity.class);
             } else {
-                intent.setClass(mActivity, FullDeviceListActivity.class);
+                intent.setClass(mActivity, XFullDeviceListActivity.class);
             }
             saveInspectionAlready();
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
@@ -349,9 +352,11 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             mReport.reportSource = Config.REPORT_SOURCE_REPORT;
             mReport.inspectionValue = currentInspectionTypeName;
             mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
+            task.status = TaskStatus.doing.name();
             ExecutorManager.executeTask(() -> {
                 try {
                     ReportService.getInstance().saveOrUpdate(mReport);
+                    TaskService.getInstance().saveOrUpdate(task);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }

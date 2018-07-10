@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.ReportService;
@@ -40,6 +41,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * creat by han 2016/05/30
  * 差动保护差流界面
  */
+@Route(path = "/different/activity")
 public class DifferentialMotionRecordActivity2 extends BaseSjjcActivity {
     private Map<String, ReportCdbhcl> reportCdbhclsMap = new HashMap<String, ReportCdbhcl>();
     private String reportId;

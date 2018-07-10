@@ -46,7 +46,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/App.Theme.Launch" />
         <activity
+            android:name="com.cnksi.bdzinspection.activity.xian.XFullDeviceListActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.cnksi.bdzinspection.activity.xian.XParticularDeviceListActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name="com.cnksi.bdzinspection.activity.xian.XNewDeviceDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
@@ -198,7 +211,7 @@
         <activity
             android:name="com.cnksi.bdzinspection.activity.SettingCopyTypeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CopyTypeTheme" />
+             />
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.CopyMaintenanceDeviceActivity"

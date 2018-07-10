@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="240px"
+        android:orientation="vertical"
+        android:paddingBottom="36px"
+        android:paddingLeft="@dimen/xs__30px"
+        android:paddingRight="@dimen/xs__30px"
+        android:paddingTop="36px">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_defect_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:maxLines="2"
+                android:padding="6px"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="33px" />
+
+            <TextView
+                android:id="@+id/tv_defect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="21px"
+                android:gravity="center_vertical|left"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="#333333"
+                android:textSize="42px" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_marginBottom="5px"
+            android:layout_marginTop="26px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_record_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text=""
+                android:textColor="#A8AAAD"
+                android:textSize="33px" />
+
+            <TextView
+                android:id="@+id/tv_defect_discover_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100px"
+                android:text=""
+                android:textColor="#A8AAAD"
+                android:textSize="33px" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_marginTop="10px"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/xs__30px">
+
+            <TextView
+                android:id="@+id/tv_defect_remind_time"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="#A8AAAD"
+                android:textSize="33px" />
+
+            <TextView
+                android:id="@+id/txt_deal_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:gravity="center_vertical|left"
+                android:maxLines="2"
+                android:text="未处理"
+                android:textColor="#F96A6A"
+                android:textSize="33px" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

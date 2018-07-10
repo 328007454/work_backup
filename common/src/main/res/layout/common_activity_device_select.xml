@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <com.cnksi.core.view.PagerSlidingTabStrip
             android:id="@+id/tab_strip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"
-            android:background="@color/xs_tab_strip_background_color" />
+            android:background="@color/xs_tab_strip_background_color"
+            android:visibility="gone" />
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:background="@color/color_019bfb"
+            android:id="@+id/st_week"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_120px"
+            android:paddingLeft="@dimen/xs__30px"
+            android:paddingRight="@dimen/xs__30px"
+            app:tl_indicator_color="@color/color_ff8b47"
+            app:tl_indicator_height="5px"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="#fff"
+            app:tl_textUnselectColor="#8DC7FD"
+            app:tl_textsize="39px" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"

@@ -124,7 +124,6 @@
     <color name="sync_divider_line_color">#BCCCCA</color>
     <color name="sync_error_info_text_color">#D33834</color>
     <color name="sync_green">#4CB62D</color>
-    <color name="sync_info_text_color">#10C47F</color>
     <color name="sync_list_item_pressed_color">#F9F1F1</color>
     <color name="sync_menu_color">#65CDCC</color>
     <color name="sync_menu_pressed2_color">#309494</color>
@@ -353,6 +352,22 @@
     <color name="black_overlay">#66000000</color>
     <color name="color_hover_019bfb">#019fff</color>
     <color name="color_ff8b47">#ff8b47</color>
+    <color name="color_3c4950">#3C4950</color>
+    <color name="color_edf6fc">#EDF6FC</color>
+    <color name="color_2cc2ea">#2CC2EA</color>
+    <color name="color_fd8a88">#FD8A88</color>
+    <color name="color_72a4ff">#72A4FF</color>
+    <color name="color_edf5fb">#EDF5FB</color>
+    <color name="color_f96a6a">#F96A6A</color>
+    <color name="color_ff9147">#FF9147</color>
+    <color name="color_ffc000">#FFC000</color>
+    <color name="color_f3f4f4">#F3f4f4</color>
+    <color name="color_d5eaf7">#ffd5eaf7</color>
+    <color name="color_d5ecff">#ffd5ecff</color>
+    <color name="color_d6d6d6">#d6d6d6</color>
+    <color name="color_e8e8ed">#E8E8ED</color>
+    <color name="color_81878e">#81878E</color>
+    <color name="sync_info_text_color">#019bfb</color>
 
 
 </resources>

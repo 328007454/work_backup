@@ -5,6 +5,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
@@ -27,6 +28,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  *
  * @author Oliver
  */
+@Route(path = "/copyValueReport/activity")
 public class CopyValueReportActivity extends BaseReportActivity {
     private Report report = null;
     /**

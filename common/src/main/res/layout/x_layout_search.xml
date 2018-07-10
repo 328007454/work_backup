@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="40px"
+        android:paddingRight="40px">
+
+        <com.cnksi.common.view.ContainsEmojiEditText
+            android:layout_marginTop="40px"
+            android:layout_marginBottom="40px"
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:background="@drawable/shape_edf5fb"
+            android:drawableLeft="@drawable/icon_search"
+            android:drawablePadding="@dimen/_20px"
+            android:gravity="center_vertical"
+            android:hint="请输入设备名称或者间隔名称"
+            android:paddingStart="@dimen/xs__39px" />
+
+    </LinearLayout>
+</layout>

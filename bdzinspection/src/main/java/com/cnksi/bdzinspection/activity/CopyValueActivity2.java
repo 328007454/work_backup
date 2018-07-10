@@ -80,7 +80,6 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_copy2);
-
         initLocation();
         initialUI();
         initialData();

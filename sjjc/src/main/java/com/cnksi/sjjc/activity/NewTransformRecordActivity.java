@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.ReportService;
@@ -38,6 +39,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/9/6.
  * 修改过后的交直流分接开关
  */
+@Route(path = "/transformRecord/activity")
 public class NewTransformRecordActivity extends BaseSjjcActivity {
     private List<DbModel> listDbModel;
     //本次读数填写的EditText

@@ -6,7 +6,6 @@ import android.os.Looper;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
-import com.baidu.location.LLSInterface;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
@@ -303,7 +302,12 @@ public class LocationUtil {
                     isPrepare = true;
                     locationClient.unRegisterLocationListener(this);
                     locationClient.stop();
+                }else if (BuildConfig.DEBUG&&bdLocation!=null&&bdLocation.getLocType() == BDLocation.INDOOR_LOCATION_SOURCE_WIFI){
+                    isPrepare = true;
+                    locationClient.unRegisterLocationListener(this);
+                    locationClient.stop();
                 }
+
             }
 
             @Override

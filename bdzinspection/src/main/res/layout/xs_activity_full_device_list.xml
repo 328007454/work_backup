@@ -7,13 +7,14 @@
         android:id="@+id/ll_root_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="#019bfb"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_title_bar_minheight_px"
-            android:background="@color/xs_global_base_color">
+            android:background="#019bfb">
 
             <ImageButton
                 android:id="@+id/ibtn_cancel"
@@ -102,28 +103,39 @@
             android:id="@+id/tab_strip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"
-            android:background="@color/xs_tab_strip_background_color" />
+            android:background="#019bfb" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#f3f4f4" />
 
-        <Button
-            android:id="@+id/btn_start_inspection"
-            android:layout_width="match_parent"
-            android:layout_height="118px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
-            android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-            android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
-            android:background="@drawable/xs_red_button_background_selector"
-            android:gravity="center"
-            android:minHeight="@dimen/xs_button_minheight"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/xs_global_text_size_px" />
+        <RelativeLayout
+            android:background="#f3f4f4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_start_inspection"
+                android:layout_width="match_parent"
+                android:layout_height="118px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                android:background="@drawable/selector_019bfb"
+                android:gravity="center"
+                android:text="完成巡视"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 </layout>

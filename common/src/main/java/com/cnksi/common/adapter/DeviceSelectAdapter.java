@@ -200,7 +200,7 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
             }
         }
         // 默认绿色
-        txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));
+        txtDevice.setTextColor(context.getResources().getColor(R.color.color_2cc2ea));
         helper.getView(R.id.rl_device_container).setBackgroundResource(R.drawable.xs_device_green_border_background_selector);
         // 不显示缺陷数量
         helper.getView(R.id.tv_device_defect_count).setVisibility(View.GONE);
@@ -211,7 +211,7 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
         } else {
             helper.getView(R.id.rl_device_container).setSelected(false);
         }
-        txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));
+        txtDevice.setTextColor(context.getResources().getColor(R.color.color_2cc2ea));
         helper.getView(R.id.rl_device_container).setBackgroundResource(R.drawable.xs_device_green_border_background_selector);
         helper.getView(R.id.rl_device_container).setOnClickListener(v -> {
             if (!isMultiSelect) {

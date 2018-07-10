@@ -46,6 +46,7 @@ import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.defect.activity.AddDefectActivity;
 import com.cnksi.defect.utils.DefectUtils;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -62,7 +63,7 @@ import static com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity.UPDATE_D
  *
  * @author lyndon
  */
-public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemClickerListener<DbModel>, KeyBordListener {
+public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemClickerListener<DbModel>, KeyBordListener,OnTabSelectListener {
 
     public final int LOAD_COPY_FINISH = 0x10;
     protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
@@ -177,10 +178,11 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
             }
             FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titleArray);
             binding.viewPager.setAdapter(pagerAdapter);
-            binding.tabStrip.setViewPager(binding.viewPager);
-            setPagerTabStripValue(binding.tabStrip);
-            binding.tabStrip.setTabPaddingLeftRight(37);
-            binding.tabStrip.setShouldExpand(false);
+            binding.stWeek.setViewPager(binding.viewPager);
+//            binding.tabStrip.setViewPager(binding.viewPager);
+//            setPagerTabStripValue(binding.tabStrip);
+//            binding.tabStrip.setTabPaddingLeftRight(37);
+//            binding.tabStrip.setShouldExpand(false);
             binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
@@ -250,11 +252,11 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
     private void setDeviceListDisplay() {
         LinearLayout.LayoutParams params = (AutoLinearLayout.LayoutParams) binding.rlCopyAllValueContainer.getLayoutParams();
         if (!isSpread) {
-            binding.ibtnSpread.setImageResource(R.drawable.xs_ic_narrow);
+            binding.ibtnSpread.setImageResource(R.mipmap.icon_full_screen);
             binding.copyContainer.setVisibility(View.GONE);
             params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         } else {
-            binding.ibtnSpread.setImageResource(R.drawable.xs_ic_amplify);
+            binding.ibtnSpread.setImageResource(R.mipmap.icon_full_screen);
             binding.copyContainer.setVisibility(View.VISIBLE);
             params.height = AutoUtils.getPercentHeightSizeBigger((int) getResources().getDimension(R.dimen.xs_copy_all_value_container_height_px));
         }
@@ -556,5 +558,16 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
     protected void onDestroy() {
         super.onDestroy();
         locationHelper.destory();
+    }
+
+    @Override
+    public void onTabSelect(int position) {
+        currentPosition = position;
+        currentFragment = fragmentList.get(position);
+    }
+
+    @Override
+    public void onTabReselect(int position) {
+
     }
 }

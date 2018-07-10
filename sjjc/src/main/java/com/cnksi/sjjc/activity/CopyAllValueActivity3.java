@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
@@ -48,6 +49,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  *
  * @author terry
  */
+@Route(path = "/copyAllValue/activity")
 public class CopyAllValueActivity3 extends BaseSjjcActivity {
     private static final int LOAD_COPY_FINISIH = 0x10;
     private static final int LOAD_COPY_MAP = LOAD_COPY_FINISIH + 1;

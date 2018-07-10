@@ -155,6 +155,7 @@ public class AddDefectActivity extends BaseTitleActivity {
             binding.etInputDefectContent.setText(TextUtils.isEmpty(defectContent) ? "" : defectContent);
         }
         if (!noDevicePart) {
+            binding.containerDevicepart.setVisibility(View.VISIBLE);
             binding.txtDevicePartName.setVisibility(View.VISIBLE);
             binding.txtDevicePartName.setText(devicePartName);
         }

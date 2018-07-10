@@ -30,8 +30,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/GPLableTextStyle"
-                        android:layout_marginTop="@dimen/xs_gp_desc_blank_h_px"
+                        style="@style/TitleTipsStyle"
                         android:text="@string/xs_gp_inspection_content" />
 
                     <com.cnksi.common.view.EditTextNoEmoj
@@ -42,7 +41,7 @@
                         android:background="@color/xs_white"
                         android:gravity="left|top"
                         android:lineSpacingMultiplier="1.2"
-                        android:minHeight="@dimen/xs_gp_textview_minHeight_px"
+                        android:minHeight="@dimen/dimen_189px"
                         android:padding="12dp"
                         android:textColor="#000000"
                         android:textSize="@dimen/xs_global_text_small_size_px" />
@@ -58,7 +57,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/GPLableTextStyle"
+                        style="@style/TitleTipsStyle"
                         android:text="巡视结果" />
 
                     <com.cnksi.common.view.EditTextNoEmoj
@@ -68,7 +67,7 @@
                         android:background="@color/xs_white"
                         android:gravity="left|top"
                         android:hint="请输巡视结果"
-                        android:minHeight="100px"
+                        android:minHeight="@dimen/dimen_189px"
                         android:padding="36px"
                         android:textSize="@dimen/xs_global_text_small_size_px" />
                 </LinearLayout>
@@ -83,7 +82,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/GPLableTextStyle"
+                        style="@style/TitleTipsStyle"
                         android:text="@string/xs_gp_remark" />
 
                     <com.cnksi.common.view.EditTextNoEmoj
@@ -93,14 +92,14 @@
                         android:background="@color/xs_white"
                         android:gravity="left|top"
                         android:hint="@string/xs_gp_remark_tips"
-                        android:minHeight="100px"
+                        android:minHeight="@dimen/dimen_189px"
                         android:padding="36px"
                         android:textSize="@dimen/xs_global_text_small_size_px" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/txt_result"
-                    style="@style/GPLableTextStyle"
+                    style="@style/TitleTipsStyle"
                     android:text="记录情况" />
 
                 <LinearLayout
@@ -114,7 +113,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/sjjc_30px">
+                        android:paddingBottom="@dimen/xs__30px"
+                        android:paddingRight="@dimen/xs__30px"
+                        android:paddingLeft="@dimen/xs__30px"
+                        android:paddingTop="@dimen/xs__30px">
 
                         <LinearLayout
                             android:id="@+id/ll_new_defect_count"
@@ -132,6 +134,7 @@
                         <View style="@style/GPInspectionReslutSplitLine" />
 
                         <LinearLayout
+                            android:paddingLeft="@dimen/xs__30px"
                             android:id="@+id/ll_track_defect_count"
                             style="@style/GPInspectionResultLL">
 
@@ -147,6 +150,7 @@
                         <View style="@style/GPInspectionReslutSplitLine" />
 
                         <LinearLayout
+                            android:paddingLeft="@dimen/xs__30px"
                             android:id="@+id/ll_eliminate_defect_count"
                             style="@style/GPInspectionResultLL">
 
@@ -164,6 +168,7 @@
                             style="@style/GPInspectionReslutSplitLine" />
 
                         <LinearLayout
+                            android:paddingLeft="@dimen/xs__30px"
                             android:id="@+id/ll_copy_result"
                             style="@style/GPInspectionResultLL">
 
@@ -187,17 +192,16 @@
                     android:hint="请输维护或试验结果"
                     android:minHeight="100px"
                     android:padding="36px"
-                    android:visibility="gone"
-                    android:textSize="@dimen/xs_global_text_small_size_px" />
+                    android:textSize="@dimen/xs_global_text_small_size_px"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/txt_pms"
-                    style="@style/GPLableTextStyle"
-                    android:text="上传PMS" />
+                    style="@style/TitleTipsStyle"
+                    android:text="上传PMS"
+                    android:visibility="gone" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/layout_upload_pms"
                     android:layout_width="match_parent"
                     android:layout_height="150px"
@@ -206,7 +210,8 @@
                     android:focusableInTouchMode="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/xs__30px">
+                    android:paddingLeft="@dimen/xs__30px"
+                    android:visibility="gone">
 
                     <android.support.v7.widget.AppCompatCheckBox
                         android:id="@+id/rb_kai_typpe"
@@ -258,24 +263,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/xs_gp_desc_blank_h_px"
-                    android:background="@color/xs_gp_desc_header_text_bg"
+                    android:background="@color/color_edf6fc"
                     android:orientation="horizontal">
 
                     <TextView
-                        style="@style/GPLableTextStyle"
+                        style="@style/TitleTipsStyle"
                         android:layout_weight="1"
                         android:text="@string/xs_gp_sign_worker" />
 
                     <TextView
                         android:id="@+id/btn_add_person"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="30px"
                         android:background="@drawable/xs_green_background_selector"
+                        android:drawableStart="@mipmap/icon_add_people"
                         android:gravity="center"
-                        android:padding="9px"
-                        android:text="@string/xs_gp_add_pesron"
+                        android:paddingLeft="@dimen/xs__39px"
+                        android:paddingRight="@dimen/xs__39px"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xs_history_defect_level_text_size_px" />
                 </LinearLayout>
@@ -291,34 +296,36 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:listSelector="@android:color/transparent"
-                        android:numColumns="3" />
+                        android:numColumns="2" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/xs_gp_desc_blank_h_px"
-                    android:background="@color/xs_gp_desc_header_text_bg"
+                    android:background="@color/color_edf6fc"
                     android:orientation="horizontal"
                     android:visibility="visible">
 
                     <TextView
-                        style="@style/GPLableTextStyle"
+                        style="@style/TitleTipsStyle"
                         android:layout_weight="1"
                         android:text="@string/xs_gp_sign_leader" />
+
 
                     <TextView
                         android:id="@+id/btn_add_person1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="30px"
                         android:background="@drawable/xs_green_background_selector"
+                        android:drawableStart="@mipmap/icon_add_people"
                         android:gravity="center"
-                        android:padding="9px"
-                        android:text="@string/xs_gp_add_pesron"
+                        android:paddingLeft="@dimen/xs__39px"
+                        android:paddingRight="@dimen/xs__39px"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xs_history_defect_level_text_size_px" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -333,7 +340,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:listSelector="@android:color/transparent"
-                        android:numColumns="3" />
+                        android:numColumns="2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -347,7 +354,7 @@
                     android:visibility="gone">
 
                     <TextView
-                        style="@style/GPLableTextStyle"
+                        style="@style/TitleTipsStyle"
                         android:text="分析结论" />
 
                     <com.cnksi.common.view.EditTextNoEmoj
@@ -372,7 +379,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/GPLableTextStyle"
+                        style="@style/TitleTipsStyle"
                         android:text="@string/xs_inspection_time" />
 
                     <TextView
@@ -403,7 +410,7 @@
         <Button
             android:id="@+id/btn_complete"
             android:layout_width="match_parent"
-            android:layout_height="118px"
+            android:layout_height="100px"
             android:layout_marginBottom="60px"
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"

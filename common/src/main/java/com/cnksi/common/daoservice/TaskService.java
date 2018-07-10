@@ -462,8 +462,9 @@ public class TaskService extends BaseService<Task> {
             extraSql = " and inspection like '%maintenance%'";
         } else if (TextUtils.equals(inspectionBigType, InspectionType.LHSY.name())) {
             extraSql = " and inspection like '%switchover%'";
+        }else if (TextUtils.equals(inspectionBigType,InspectionType.SBJC.name())){
+            extraSql = " and inspection like '%sbjc%'";
         }
-
 
         try {
             tasks = selector().expr("and  schedule_time > (select datetime('now','localtime','start of day','-6 day','weekday 1') )  AND" +

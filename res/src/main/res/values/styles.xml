@@ -251,6 +251,16 @@
         <item name="android:maxHeight">@dimen/sync_progressbar_width_height</item>
     </style>
 
+    <style name="TitleTipsStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">18px</item>
+        <item name="android:paddingLeft">30px</item>
+        <item name="android:paddingTop">18px</item>
+        <item name="android:textColor">@color/color_019bfb</item>
+        <item name="android:textSize">@dimen/dimen_33px</item>
+        <item name="android:background">@color/color_edf6fc</item>
+    </style>
 
 
 </resources>
