@@ -21,6 +21,7 @@ import com.cnksi.common.enmu.WeekTime;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.RouterActivityUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -103,6 +104,20 @@ public class XTourFragmentTask extends BaseFragment {
             homeWeekTaskAdapter = new HomeWeekTaskAdapter(R.layout.x_home_task_item, taskList);
             tourTaskBinding.rcy.setLayoutManager(new LinearLayoutManager(getContext()));
             tourTaskBinding.rcy.setAdapter(homeWeekTaskAdapter);
+            homeWeekTaskAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+                Task task = (Task) adapter.getItem(position);
+                DialogUtils.showSureTipsDialog(mActivity, null, "是否删除该任务", v -> {
+                    task.dlt = "1";
+                    try {
+                        TaskService.getInstance().saveOrUpdate(task);
+                        taskList.remove(task);
+                        homeWeekTaskAdapter.notifyDataSetChanged();
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
+                });
+                return false;
+            });
             initClickCallBack();
         });
     }

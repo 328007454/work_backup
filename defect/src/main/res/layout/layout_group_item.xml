@@ -10,13 +10,12 @@
             android:id="@+id/tv_group_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/xs_gray_background_color"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+            android:paddingBottom="18px"
             android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-            android:paddingTop="@dimen/xs_text_button_padding_top_px"
-            android:textColor="@color/xs_green_color"
-            android:textSize="@dimen/xs_global_text_size_px" />
+            android:paddingTop="18px"
+            android:background="@color/color_edf6fc"
+            android:textSize="33px" />
 
         <ImageView
             android:layout_width="match_parent"

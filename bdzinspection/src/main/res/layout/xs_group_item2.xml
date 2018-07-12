@@ -7,12 +7,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:drawablePadding="10px"
             android:id="@+id/tv_group_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_edf6fc"
             android:drawableLeft="@drawable/circle_019bfb"
+            android:drawablePadding="10px"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/xs__30px"
             android:paddingLeft="@dimen/xs_global_padding_left_right_px"

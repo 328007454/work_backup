@@ -37,14 +37,15 @@
                     android:id="@+id/txt_eliminate_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/xs_green_color"
+
+                    android:background="@color/color_edf6fc"
                     android:gravity="center_vertical"
-                    android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                    android:paddingBottom="18px"
                     android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                    android:paddingTop="18px"
                     android:text="@string/xs_clear_count_str"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/xs_global_text_size_px"
+                    android:textColor="@color/color_019bfb"
+                    android:textSize="@dimen/dimen_33px"
                     app:layout_constraintTop_toBottomOf="@+id/include_defect" />
 
 
@@ -264,14 +265,14 @@
                     android:id="@+id/txt_defect_reason_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/xs_green_color"
+                    android:background="@color/color_edf6fc"
                     android:gravity="center_vertical"
-                    android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                    android:paddingBottom="18px"
                     android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                    android:paddingTop="18px"
                     android:text="@string/xs_defect_reason_str"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/xs_global_text_size_px"
+                    android:textColor="@color/color_019bfb"
+                    android:textSize="@dimen/dimen_33px"
                     app:layout_constraintTop_toBottomOf="@+id/container_defect_elimate_pic" />
 
 

@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="正在跟踪..."
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textColor="@color/refresh_background_color"
                 android:textSize="@dimen/core_padding_30px" />
 

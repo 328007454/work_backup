@@ -543,13 +543,9 @@ public class XNewDeviceDetailsActivity extends BaseActivity implements DevicePar
 
         devicedetailsBinding.txtDeviceInfo.setOnClickListener(v -> {
             setBtInforSize(true);
-            devicedetailsBinding.containerTourInfo.setVisibility(View.GONE);
-            devicedetailsBinding.containerDeviceInfo.setVisibility(View.VISIBLE);
         });
         devicedetailsBinding.txtTourInfo.setOnClickListener(v -> {
             setBtInforSize(false);
-            devicedetailsBinding.containerTourInfo.setVisibility(View.VISIBLE);
-            devicedetailsBinding.containerDeviceInfo.setVisibility(View.GONE);
         });
 
         devicedetailsBinding.tvAddDefect.setOnClickListener(v -> {
@@ -856,6 +852,9 @@ public class XNewDeviceDetailsActivity extends BaseActivity implements DevicePar
 
     @Override
     public void onBackPressed() {
+        if (mCurrentDevice==null){
+            return;
+        }
         if (mCurrentDevice.isImportant() && !TextUtils.isEmpty(mCurrentDevice.needPicInspection) && mCurrentDevice.needPicInspection.contains(currentInspectionType) && SystemConfig.isMustPicImportantDevice() && (placedDevice == null || !placedDevice.isHasPhoto())) {
             DialogUtils.showSureTipsDialog(mActivity, null, "当前设备是关键设备，按照规定应拍照确认！是否返回？", v -> XNewDeviceDetailsActivity.super.onBackPressed());
         } else {

@@ -145,8 +145,13 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     dialog.show(fragmentTransaction, "dialog");
                 }
-
+            }else if (v.getId() == R.id.txt_defect_count) {
+                Intent intent = new Intent(mActivity, com.cnksi.defect.activity.DefectControlActivity.class);
+                String spid = dbModel.getString("spid");
+                intent.putExtra(Config.CURRENT_SPACING_ID, spid);
+                startActivity(intent);
             }
+
         });
         // 设置间隔长按事件,间隔定位
         adapter.setGroupItemLongClickListener((v, item, position) -> {

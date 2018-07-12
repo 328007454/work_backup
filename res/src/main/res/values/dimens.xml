@@ -636,4 +636,5 @@
     <dimen name="dimen_189px">189px</dimen>
     <dimen name="dimen_522px">522px</dimen>
     <dimen name="dimen_9px">9px</dimen>
+    <dimen name="dimen_18px">18px</dimen>
 </resources>

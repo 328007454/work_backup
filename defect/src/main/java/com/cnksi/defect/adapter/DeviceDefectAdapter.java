@@ -1,6 +1,7 @@
 package com.cnksi.defect.adapter;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -38,21 +39,25 @@ public class DeviceDefectAdapter extends BaseQuickAdapter<DefectRecord, BaseView
 
     @Override
     protected void convert(BaseViewHolder holder, DefectRecord item) {
+        Object[] result = DefectUtils.convert2DefectDescBackground(item);
         ImageView defectImage = holder.getView(R.id.iv_defect_image);
-        TextView txtDescription = holder.getView(R.id.tv_defect_description);
         TextView txtDiscoverTime = holder.getView(R.id.tv_defect_discover_time);
         TextView txtRecordPerson = holder.getView(R.id.tv_record_person);
         TextView txtDefectSpace = holder.getView(R.id.tv_defect_space);
         TextView txtDefectDevice = holder.getView(R.id.tv_defect_device);
         TextView txtStatus = holder.getView(R.id.txt_defect_status);
-        ImageView ivTips = holder.getView(R.id.iv_tips);
+        TextView txtDefectContent = holder.getView(R.id.tv_defect_content);
+        TextView txtDefect = holder.getView(R.id.tv_defect);
+
+        txtDefect.setText(TextUtils.isEmpty(item.description) ? "" : item.description);
+        txtDefectContent.setText((CharSequence) result[0]);
+        txtDefectContent.setBackgroundColor(Color.parseColor((String) result[1]));
+
 
         txtRecordPerson.setText("记录人员:" + item.discoverer);
 
         txtDefectDevice.setText("设备:" + (TextUtils.isEmpty(item.devcie) ? "" : item.devcie));
         txtDefectSpace.setText("间隔:" + item.spname);
-        ivTips.setImageResource(DefectUtils.convert2ConnerMark(item.defectlevel));
-        txtDescription.setText(DefectUtils.convert2DefectDesc(item));
         txtDiscoverTime.setText(mContext.getResources().getString(R.string.xs_defect_discover_time_format_str, DateUtils.getFormatterTime(item.discovered_date)));
 
         // 判读图片是否存在，不存在就不显示，或显示默认图片

@@ -208,7 +208,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:textColor">@color/xs_global_gray_text_color</item>
-        <item name="android:textSize">38px</item>
+        <item name="android:textSize">@dimen/xs__30px</item>
     </style>
 
     <style name="IRRusltValueTextStyle">
@@ -241,16 +241,17 @@
     </style>
 
     <style name="IRInspectionBaseDataLL">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/xs_global_padding_left_right_px</item>
         <item name="android:layout_marginRight">@dimen/xs_global_padding_left_right_px</item>
-        <item name="android:orientation">horizontal</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="IRInspectionBaseDataTitle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0px</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:textColor">@color/xs_global_gray_text_color</item>

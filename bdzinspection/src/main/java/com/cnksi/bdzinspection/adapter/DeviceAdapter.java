@@ -218,6 +218,8 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             handleDevicePlaced(spaceItem);
             spaceArrived = isOneDevice && arriveSpaceIdList != null && arriveSpaceIdList.contains(spaceId);
             imgLocation.setImageResource(spaceArrived ? R.mipmap.ic_already_location : R.mipmap.ic_has_location);
+        } else {
+            handleDevicePlaced(spaceItem);
         }
         if (hasQrCodeSpids != null && hasQrCodeSpids.contains(spaceId)) {
             imgLocation.setImageResource(R.mipmap.ic_rfid_location);
@@ -283,6 +285,11 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         });
 
         imgLocation.setOnClickListener(v -> {
+            if (groupItemClickListener != null) {
+                groupItemClickListener.onClick(v, space, position);
+            }
+        });
+        txtSpaceCount.setOnClickListener(v -> {
             if (groupItemClickListener != null) {
                 groupItemClickListener.onClick(v, space, position);
             }

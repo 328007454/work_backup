@@ -208,7 +208,8 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="@dimen/xs_global_padding_half_left_right_px"
                 android:layout_weight="1"
-                android:background="@drawable/xs_red_button_background_selector"
+
+                android:background="@drawable/button_selector_f96a6a"
                 android:gravity="center"
                 android:minHeight="100px"
                 android:text="@string/xs_dialog_cancel_text_str"
@@ -223,7 +224,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/xs_global_padding_half_left_right_px"
                 android:layout_weight="1"
-                android:background="@drawable/xs_grass_green_button_background_selector"
+                android:background="@drawable/selector_019bfb"
                 android:gravity="center"
                 android:minHeight="100px"
                 android:text="@string/xs_confirm_str"

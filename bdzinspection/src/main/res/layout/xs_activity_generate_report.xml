@@ -114,8 +114,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/xs__30px"
-                        android:paddingRight="@dimen/xs__30px"
                         android:paddingLeft="@dimen/xs__30px"
+                        android:paddingRight="@dimen/xs__30px"
                         android:paddingTop="@dimen/xs__30px">
 
                         <LinearLayout
@@ -134,9 +134,9 @@
                         <View style="@style/GPInspectionReslutSplitLine" />
 
                         <LinearLayout
-                            android:paddingLeft="@dimen/xs__30px"
                             android:id="@+id/ll_track_defect_count"
-                            style="@style/GPInspectionResultLL">
+                            style="@style/GPInspectionResultLL"
+                            android:paddingLeft="@dimen/xs__30px">
 
                             <TextView
                                 style="@style/GPInspectionRusltNameTextStyle"
@@ -150,9 +150,9 @@
                         <View style="@style/GPInspectionReslutSplitLine" />
 
                         <LinearLayout
-                            android:paddingLeft="@dimen/xs__30px"
                             android:id="@+id/ll_eliminate_defect_count"
-                            style="@style/GPInspectionResultLL">
+                            style="@style/GPInspectionResultLL"
+                            android:paddingLeft="@dimen/xs__30px">
 
                             <TextView
                                 style="@style/GPInspectionRusltNameTextStyle"
@@ -168,9 +168,9 @@
                             style="@style/GPInspectionReslutSplitLine" />
 
                         <LinearLayout
-                            android:paddingLeft="@dimen/xs__30px"
                             android:id="@+id/ll_copy_result"
-                            style="@style/GPInspectionResultLL">
+                            style="@style/GPInspectionResultLL"
+                            android:paddingLeft="@dimen/xs__30px">
 
                             <TextView
                                 style="@style/GPInspectionRusltNameTextStyle"
@@ -285,19 +285,20 @@
                         android:textSize="@dimen/xs_history_defect_level_text_size_px" />
                 </LinearLayout>
 
-                <LinearLayout
+                <!--<LinearLayout-->
+                <!--android:minHeight="300px"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/xs_white">-->
+
+                <com.cnksi.common.view.LineGridView
+                    android:id="@+id/signList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/xs_white"
-                    android:minHeight="138px">
-
-                    <com.cnksi.bdzinspection.view.NoScrollGridView
-                        android:id="@+id/signList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:listSelector="@android:color/transparent"
-                        android:numColumns="2" />
-                </LinearLayout>
+                    android:background="@color/white"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="2" />
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -328,20 +329,21 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/xs_white"
-                    android:minHeight="228px"
-                    android:visibility="visible">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@color/xs_white"-->
+                    <!--android:minHeight="228px"-->
+                    <!--android:visibility="visible">-->
 
-                    <com.cnksi.bdzinspection.view.NoScrollGridView
+                    <com.cnksi.common.view.LineGridView
                         android:id="@+id/signList1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:listSelector="@android:color/transparent"
                         android:numColumns="2" />
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:id="@+id/layout_conclusion"

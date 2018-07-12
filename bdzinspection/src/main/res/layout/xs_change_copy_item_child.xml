@@ -28,7 +28,7 @@
                 android:drawablePadding="@dimen/xs_drawable_padding_px"
                 android:gravity="center_vertical|left"
                 android:minHeight="@dimen/xs_list_item_minheight_px"
-                android:textColor="@color/xs_global_text_color"
+                android:textColor="@color/color_81878e"
                 android:textSize="@dimen/xs_global_text_size_px" />
 
             <TextView
@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:minHeight="@dimen/xs_edit_text_minheight_px"
                 android:minWidth="@dimen/xs_edit_text_minwidth_px"
-                android:textColor="@color/xs_green_color"
+                android:textColor="@color/color_019bfb"
                 android:textColorHint="@color/xs_global_gray_text_color"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/xs_global_text_size_px" />
@@ -55,10 +55,10 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:background="@color/xs_gray_confirm_color" />
+            android:background="@color/xs_gray_confirm_color"
+            android:visibility="gone" />
     </LinearLayout>
 
 </layout>

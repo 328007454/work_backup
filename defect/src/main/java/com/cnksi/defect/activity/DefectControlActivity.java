@@ -53,6 +53,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     private List<DbModel> userModels;
     private String userName = "全部";
     private String selectUserAccount;
+    private String spid;
 
     @Override
     public void getRootDataBinding() {
@@ -73,6 +74,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
 
     @Override
     public void initData() {
+        spid = getIntent().getStringExtra(Config.CURRENT_SPACING_ID);
         currentDepartmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         defectTypes = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
         ExecutorManager.executeTaskSerially(() -> {
@@ -97,7 +99,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
 
         ExecutorManager.executeTaskSerially(() -> {
             List<DefectRecord> finalRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.bdzid, userName
-                    , defectLevel, currentDepartmentName);
+                    , defectLevel, currentDepartmentName,spid);
             runOnUiThread(() -> {
                 defectRecords.clear();
                 if (finalRecords != null && !finalRecords.isEmpty()) {

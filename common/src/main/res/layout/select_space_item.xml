@@ -41,17 +41,15 @@
 
         <TextView
             android:id="@+id/txt_defect_count"
-            android:layout_width="70px"
+            android:layout_width="85px"
             android:layout_height="match_parent"
-            android:layout_marginBottom="31px"
             android:layout_marginRight="@dimen/xs__30px"
-            android:layout_marginTop="31px"
-            android:background="@drawable/shape_fd8a88"
+            android:background="@drawable/shape_layerlist_fd8a88"
             android:gravity="center"
             android:text="3"
             android:textColor="@color/xs_white"
             android:textSize="36px"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <!-- 设备名称 -->
         <ImageView
@@ -91,6 +89,6 @@
             android:layout_marginRight="30px"
             android:scaleType="fitCenter"
             android:src="@mipmap/ic_no_location"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </com.cnksi.common.view.UnderLineLinearLayout>
 </layout>

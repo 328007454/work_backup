@@ -96,7 +96,7 @@ public class EliminateDefectFragment extends BaseDefectFragment {
         getActivity().runOnUiThread(() -> {
             if (defectRecords != null) {
                 if (deviceDefectAdapter == null) {
-                    deviceDefectAdapter = new DeviceDefectAdapter(R.layout.layout_defect_item, defectRecords);
+                    deviceDefectAdapter = new DeviceDefectAdapter(R.layout.adapter_defect_item, defectRecords);
                     binding.includeDefect.lvContainer.setLayoutManager(new LinearLayoutManager(getContext()));
                     binding.includeDefect.lvContainer.setAdapter(deviceDefectAdapter);
                     deviceDefectAdapter.setCurrentModel(Config.ELIMINATE_DEFECT_MODEL);

@@ -47,6 +47,9 @@ import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.util.AccountUtil;
 
 import org.xutils.common.util.DatabaseUtils;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -123,8 +126,6 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
 
 
     public void inUI() {
-        //设置版本信息
-        binding.tvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(mActivity)));
         String userName = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         if (!TextUtils.isEmpty(userName)) {
             String[] userNames = userName.split(",");
@@ -157,6 +158,23 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                     usersName = UserService.getInstance().searchUsersName(s.toString());
                     mHandler.sendEmptyMessage(LOAD_DATA);
                 });
+            }
+        });
+
+        ExecutorManager.executeTaskSerially(() ->{
+            try {
+               DbModel dbModel =  CommonApplication.getInstance().getDbManager().findDbModelFirst(new SqlInfo("select * from province where dlt = 0 "));
+                runOnUiThread(() -> {
+                    if (dbModel==null){
+                        binding.tvVersion.setVisibility(View.GONE);
+                    }else {
+                        String copyRightsName = dbModel.getString("copyright");
+                        String version = dbModel.getString("pad_version");
+                        binding.tvVersion.setText((TextUtils.isEmpty(copyRightsName)?"":copyRightsName)+""+(TextUtils.isEmpty(version)?"":version));
+                    }
+                });
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
 
@@ -269,14 +287,14 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
      */
     private void loginUser(boolean login) {
         //登录系统
-        if (login) {
-            if (null != mCurrentUserOne || null != mCurrentUserTwo) {
-                mHandler.sendEmptyMessage(USER_LOGIN_SUCCESS);
-            } else {
-                mHandler.sendEmptyMessage(NO_LOGIN_USER);
-            }
-            return;
-        }
+//        if (login) {
+//            if (null != mCurrentUserOne || null != mCurrentUserTwo) {
+//                mHandler.sendEmptyMessage(USER_LOGIN_SUCCESS);
+//            } else {
+//                mHandler.sendEmptyMessage(NO_LOGIN_USER);
+//            }
+//            return;
+//        }
         //添加登录人员
         final String userName = binding.etAutoUsername.getText().toString().trim();
         final String userPwd = binding.etPassword.getText().toString().trim();
@@ -314,7 +332,7 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                 if (null == mCurrentUserOne) {
                     mCurrentUserOne = tempUser;
                     userOnePassword = binding.etPassword.getText().toString().trim();
-                    mHandler.sendEmptyMessage(USER_ONE_LOGIN_SUCCESS);
+                    mHandler.sendEmptyMessage(USER_LOGIN_SUCCESS);
                 } else if (null == mCurrentUserTwo) {
                     mCurrentUserTwo = tempUser;
                     userTwoPassword = binding.etPassword.getText().toString().trim();
@@ -389,6 +407,7 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                 break;
             //登录成功
             case USER_LOGIN_SUCCESS:
+                setUserLoginSuccess(mCurrentUserOne, binding.user1Img);
                 loginSystem();
                 break;
             case LOAD_DATA:
@@ -475,8 +494,10 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
         } else {
             return;
         }
-        PreferencesUtils.put(Config.CURRENT_LOGIN_USER, username);
-        PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
+        if (binding.checkPassword.isChecked()) {
+            PreferencesUtils.put(Config.CURRENT_LOGIN_USER, username);
+            PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
+        }
         PreferencesUtils.put(Config.OTHER_DEPT_USER, mCurrentUserOne.type);
         PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, mCurrentUserOne.deptName);
         ARouter.getInstance().build("/login/XHomeActivity").navigation();

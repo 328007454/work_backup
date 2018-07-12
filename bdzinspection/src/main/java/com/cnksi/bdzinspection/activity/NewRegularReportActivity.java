@@ -106,9 +106,9 @@ public class NewRegularReportActivity extends BaseActivity {
         getIntentValue();
         if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
             if (currentInspectionType.contains("switchover")) {
-                binding.txtXunshiResult.setText("试验结果");
+//                binding.txtXunshiResult.setText("试验结果");
             } else {
-                binding.txtXunshiResult.setText("维护结果");
+//                binding.txtXunshiResult.setText("维护结果");
             }
         }
         binding.ibtnExit.setImageResource(R.drawable.xs_return_main_menu_selector);

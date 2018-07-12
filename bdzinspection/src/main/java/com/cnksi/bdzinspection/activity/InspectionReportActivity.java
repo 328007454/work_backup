@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -46,6 +47,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.DensityUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -150,10 +152,10 @@ public class InspectionReportActivity extends BaseActivity {
                 || currentInspectionType.equals(InspectionType.day.name())
                 || currentInspectionType.equals(InspectionType.routine.name())) {
         } else {
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.svContainer.getLayoutParams();
-            params.height = params.height + getResources().getDimensionPixelOffset(R.dimen.xs_playback_button_height);
-            params.setMargins(0, 0, 0, 36);
-            binding.svContainer.setLayoutParams(params);
+//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.svContainer.getLayoutParams();
+//            params.height = params.height + getResources().getDimensionPixelOffset(R.dimen.xs_playback_button_height);
+//            params.setMargins(0, 0, 0, 36);
+//            binding.svContainer.setLayoutParams(params);
         }
     }
 
@@ -221,7 +223,7 @@ public class InspectionReportActivity extends BaseActivity {
 
                 try {
 
-                    spacingList = SpacingService.getInstance().findByFunctionModel(currentReportId,currentBdzId, fucntionModel, sort,currentInspectionType);
+                    spacingList = SpacingService.getInstance().findByFunctionModel(currentReportId, currentBdzId, fucntionModel, sort, currentInspectionType);
                 } catch (DbException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -268,13 +270,13 @@ public class InspectionReportActivity extends BaseActivity {
      */
     private void placedSpacing() {
 //        if (!isParticularInspection()) {
-            List<Placed> placedList = PlacedService.getInstance().findPlacedSpace(currentReportId);
-            if (null != placedList && !placedList.isEmpty()) {
-                placedSpacing = new ArrayList<String>();
-                for (Placed p : placedList) {
-                    placedSpacing.add(p.spId);
-                }
+        List<Placed> placedList = PlacedService.getInstance().findPlacedSpace(currentReportId);
+        if (null != placedList && !placedList.isEmpty()) {
+            placedSpacing = new ArrayList<String>();
+            for (Placed p : placedList) {
+                placedSpacing.add(p.spId);
             }
+        }
 //        }
 
     }

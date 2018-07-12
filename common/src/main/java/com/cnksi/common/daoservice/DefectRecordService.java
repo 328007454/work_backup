@@ -331,7 +331,7 @@ public class DefectRecordService extends BaseService<DefectRecord> {
      *
      * @return
      */
-    public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId, String userName, int level, String deptName) {
+    public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId, String userName, int level, String deptName,String spid) {
         List<DefectRecord> defects = new ArrayList<>();
         try {
             Selector<DefectRecord> selector = selector().and(DefectRecord.HAS_TRACK, "=", "N")
@@ -349,6 +349,9 @@ public class DefectRecordService extends BaseService<DefectRecord> {
 
             if (level > 0) {
                 selector.and(DefectRecord.DEFECTLEVEL, "=", level);
+            }
+            if (!TextUtils.isEmpty(spid)){
+                selector = selector.and(DefectRecord.SPID,"=",spid);
             }
             selector.expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
                     .orderBy(DefectRecord.DISCOVERED_DATE, true);

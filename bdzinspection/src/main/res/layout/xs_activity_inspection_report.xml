@@ -2,16 +2,18 @@
 <layout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                  android:id="@+id/ll_root_container"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_title_bar_minheight_px"
-            android:background="@color/xs_global_base_color">
+            android:background="@color/color_019bfb">
 
             <ImageButton
                 android:id="@+id/ibtn_cancel"
@@ -136,9 +138,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_019bfb"
             android:paddingLeft="@dimen/xs_global_padding_left_right_px"
             android:paddingRight="@dimen/xs_global_padding_left_right_px"
-            android:paddingTop="@dimen/xs_report_padding_top_px">
+            android:paddingTop="@dimen/_20px">
+
 
             <ImageView
                 android:layout_width="match_parent"
@@ -147,11 +151,12 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/xs_ic_report_exit" />
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:layout_height="1657px"
                 android:layout_marginTop="@dimen/xs_global_padding_half_left_right_px">
+
 
                 <!--  -->
 
@@ -168,196 +173,380 @@
                     android:textSize="@dimen/xs_report_generate_text_size_px" />
                 <!-- android:layout_marginTop="@dimen/report_margin_top" -->
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_report_content_container"
                     android:layout_width="match_parent"
-                    android:layout_height="1594px"
-                    android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
-                    android:layout_marginTop="-1558px"
-                    android:background="@drawable/xs_ic_report_background"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/xs_global_padding_half_left_right_px"
-                    android:paddingRight="@dimen/xs_global_padding_half_left_right_px"
-                    android:paddingTop="@dimen/xs_report_padding_top_px">
+                    android:layout_height="1657px"
+                    android:layout_marginTop="-1657px">
 
-                    <LinearLayout style="@style/IRInspectionBaseDataLL">
-
-                        <TextView
-                            style="@style/IRInspectionBaseDataTitle"
-                            android:text="@string/xs_inspection_start_time_str" />
-
-                        <TextView
-                            android:id="@+id/tv_inspection_start_time"
-                            style="@style/IRInspectionBaseDataValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/IRInspectionBaseDataLL">
-
-                        <TextView
-                            style="@style/IRInspectionBaseDataTitle"
-                            android:text="@string/xs_inspection_end_time_str" />
-
-                        <TextView
-                            android:id="@+id/tv_inspection_end_time"
-                            style="@style/IRInspectionBaseDataValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/IRInspectionBaseDataLL">
-
-                        <TextView
-                            style="@style/IRInspectionBaseDataTitle"
-                            android:text="工作人员" />
-
-                        <TextView
-                            android:id="@+id/tv_inspection_worker"
-                            style="@style/IRInspectionBaseDataValue" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/IRInspectionBaseDataLL"
-                        android:visibility="gone">
-
-                        <TextView
-                            style="@style/IRInspectionBaseDataTitle"
-                            android:text="工作负责人" />
-
-                        <TextView
-                            android:id="@+id/tv_inspection_leader"
-                            style="@style/IRInspectionBaseDataValue" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_temperature"
-                        style="@style/IRInspectionBaseDataLL">
-
-                        <TextView
-                            style="@style/IRInspectionBaseDataTitle"
-                            android:text="@string/xs_inspection_temperature_str" />
-
-                        <TextView
-                            android:id="@+id/tv_inspection_temperature"
-                            style="@style/IRInspectionBaseDataValue" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_weather"
-                        style="@style/IRInspectionBaseDataLL">
-
-                        <TextView
-                            style="@style/IRInspectionBaseDataTitle"
-                            android:text="@string/xs_inspection_weather_str" />
-
-                        <TextView
-                            android:id="@+id/tv_inspection_tq"
-                            style="@style/IRInspectionBaseDataValue" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_inspection"
-                        style="@style/IRInspectionBaseDataLL"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/tv_type_name"
-                            style="@style/IRInspectionBaseDataTitle"
-                            android:text="@string/xs_inspection_type_name" />
-
-                        <TextView
-                            android:id="@+id/tv_inspection_type"
-                            style="@style/IRInspectionBaseDataValue" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_dash_line"
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="45px"
-                        android:background="@drawable/xs_dotted_line_background" />
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_tour_report_bg" />
 
-                    <ScrollView
-                        android:id="@+id/sv_container"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:fadeScrollbars="false">
+                        android:layout_height="1656px"
+                        android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/xs_global_padding_half_left_right_px"
+                        android:paddingRight="@dimen/xs_global_padding_half_left_right_px"
+                        android:visibility="visible">
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="42px">
+
+
+                            <LinearLayout
+                                style="@style/IRInspectionBaseDataLL"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_weight="1"
+                                    android:text="@string/xs_inspection_start_time_str"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_start_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_marginTop="20px"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/global_text_color"
+                                    android:textSize="@dimen/xs__39px" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                style="@style/IRInspectionBaseDataLL"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_weight="1"
+                                    android:text="@string/xs_inspection_end_time_str"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_end_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_marginTop="20px"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/global_text_color"
+                                    android:textSize="@dimen/xs__39px" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="24px">
+
+
+                            <LinearLayout
+                                style="@style/IRInspectionBaseDataLL"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_weight="1"
+                                    android:text="工作人员"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_worker"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_marginTop="20px"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/global_text_color"
+                                    android:textSize="@dimen/xs__39px" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                style="@style/IRInspectionBaseDataLL"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_weight="1"
+                                    android:text="工作负责人"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_leader"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_marginTop="20px"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/global_text_color"
+                                    android:textSize="@dimen/xs__39px" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_temperature"
+                                style="@style/IRInspectionBaseDataLL"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_weight="1"
+                                    android:text="@string/xs_inspection_temperature_str"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_temperature"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_marginTop="20px"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/global_text_color"
+                                    android:textSize="@dimen/xs__39px" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_weather"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="42px">
+
+
+                            <LinearLayout
+                                style="@style/IRInspectionBaseDataLL"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_weight="1"
+                                    android:text="@string/xs_inspection_weather_str"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_tq"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0px"
+                                    android:layout_marginTop="20px"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/global_text_color"
+                                    android:textSize="@dimen/xs__39px" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/layout_inspection"
+                            style="@style/IRInspectionBaseDataLL"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tv_type_name"
+                                style="@style/IRInspectionBaseDataTitle"
+                                android:text="@string/xs_inspection_type_name" />
+
+                            <TextView
+                                android:id="@+id/tv_inspection_type"
+                                style="@style/IRInspectionBaseDataValue" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40px"
+                            android:layerType="software"
+                            android:paddingLeft="17px"
+                            android:paddingRight="17px">
+
+                            <View
+                                android:id="@+id/tv_dash_line"
+                                android:layout_width="match_parent"
+                                android:layout_height="10px"
+                                android:background="@drawable/xs_dotted_line_background" />
+
+                        </LinearLayout>
+
+
+                        <!--<ScrollView-->
+                        <!--android:id="@+id/sv_container"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:fadeScrollbars="false">-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:layout_marginRight="@dimen/xs__30px"
+                            android:layout_marginTop="38px"
+                            android:background="@color/white"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:id="@+id/layout_xunshicontent"
-                                style="@style/IRBigLabelStyle"
-                                android:layout_marginTop="0dp">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:background="@color/white"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    style="@style/IRLableTextStyle"
-                                    android:text="巡视内容" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableLeft="@mipmap/icon_tour_content"
+                                    android:drawablePadding="10px"
+                                    android:text="巡视内容"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
 
                                 <TextView
                                     android:id="@+id/tv_inspection_content"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_33px"
                                     android:gravity="left|center_vertical"
-                                    android:padding="24px"
                                     android:text="123312"
-                                    android:textColor="@color/xs_dark_text"
+                                    android:textColor="@color/color_242827"
                                     android:textSize="@dimen/xs_device_item_name_text_size_px" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10px"
+                                android:layout_marginTop="40px"
+                                android:background="@drawable/xs_dotted_line_background"
+                                android:layerType="software" />
+
                             <LinearLayout
                                 android:id="@+id/layout_result"
-                                style="@style/IRBigLabelStyle">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="40px"
+                                android:background="@color/white"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    style="@style/IRLableTextStyle"
-                                    android:text="巡视结果" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableLeft="@mipmap/icon_tour_result"
+                                    android:drawablePadding="10px"
+                                    android:text="巡视结果"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
 
                                 <TextView
                                     android:id="@+id/tv_inspection_result"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_33px"
                                     android:gravity="left|center_vertical"
-                                    android:padding="8dp"
-                                    android:textColor="@color/xs_dark_text"
+                                    android:text=""
+                                    android:textColor="@color/color_242827"
                                     android:textSize="@dimen/xs_device_item_name_text_size_px" />
                             </LinearLayout>
 
                             <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="40px">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="10px"
+                                    android:background="@drawable/xs_dotted_line_background"
+                                    android:layerType="software" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:id="@+id/layout_mark"
-                                style="@style/IRBigLabelStyle">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="40px"
+                                android:background="@color/white"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    style="@style/IRLableTextStyle"
-                                    android:text="备注" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableLeft="@mipmap/icon_remark"
+                                    android:drawablePadding="10px"
+                                    android:text="备注"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
 
                                 <TextView
                                     android:id="@+id/tv_inspection_mark"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_33px"
                                     android:gravity="left|center_vertical"
-                                    android:padding="8dp"
-                                    android:textColor="@color/xs_dark_text"
+                                    android:text=""
+                                    android:textColor="@color/color_242827"
                                     android:textSize="@dimen/xs_device_item_name_text_size_px" />
                             </LinearLayout>
 
-                            <LinearLayout style="@style/IRBigLabelStyle">
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10px"
+                                android:layout_marginTop="40px"
+                                android:background="@drawable/xs_dotted_line_background"
+                                android:layerType="software" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="40px"
+                                android:background="@color/white"
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/txt_xunshi_result"
-                                    style="@style/IRLableTextStyle"
-                                    android:text="记录情况" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableLeft="@mipmap/icon_tour_record"
+                                    android:drawablePadding="10px"
+                                    android:text="记录情况"
+                                    android:textColor="@color/color_999999"
+                                    android:textSize="@dimen/dimen_33px" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:paddingBottom="@dimen/xs_global_padding_left_right_px"
-                                    android:paddingTop="@dimen/xs_global_padding_left_right_px">
+                                    android:paddingTop="40px">
 
                                     <LinearLayout
                                         android:id="@+id/ll_new_defect_count"
-                                        style="@style/IRResultLL">
+                                        style="@style/IRResultLL"
+                                        android:layout_marginRight="11px"
+                                        android:background="@drawable/shape_f8eedf"
+                                        android:paddingBottom="10px"
+                                        android:paddingTop="10px">
 
                                         <TextView
                                             style="@style/IRRusltNameTextStyle"
@@ -372,7 +561,12 @@
 
                                     <LinearLayout
                                         android:id="@+id/ll_track_defect_count"
-                                        style="@style/IRResultLL">
+                                        style="@style/IRResultLL"
+                                        android:layout_marginLeft="11px"
+                                        android:layout_marginRight="11px"
+                                        android:background="@drawable/shape_f8eedf"
+                                        android:paddingBottom="10px"
+                                        android:paddingTop="10px">
 
                                         <TextView
                                             style="@style/IRRusltNameTextStyle"
@@ -387,7 +581,12 @@
 
                                     <LinearLayout
                                         android:id="@+id/ll_eliminate_defect_count"
-                                        style="@style/IRResultLL">
+                                        style="@style/IRResultLL"
+                                        android:layout_marginLeft="11px"
+                                        android:layout_marginRight="11px"
+                                        android:background="@drawable/shape_f8eedf"
+                                        android:paddingBottom="10px"
+                                        android:paddingTop="10px">
 
                                         <TextView
                                             style="@style/IRRusltNameTextStyle"
@@ -404,7 +603,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/ll_copy_result"
-                                        style="@style/IRResultLL">
+                                        style="@style/IRResultLL"
+                                        android:layout_marginLeft="11px"
+                                        android:background="@drawable/shape_f8eedf"
+                                        android:paddingBottom="10px"
+                                        android:paddingTop="10px">
 
                                         <TextView
                                             style="@style/IRRusltNameTextStyle"
@@ -459,26 +662,44 @@
                                 </HorizontalScrollView>
                             </LinearLayout>
                         </LinearLayout>
-                    </ScrollView>
+                        <!--</ScrollView>-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/xs__30px"
+                            android:paddingRight="@dimen/xs__30px">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10px"
+                                android:layout_marginTop="40px"
+                                android:background="@drawable/xs_dotted_line_background"
+                                android:layerType="software" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/bt_xunjian_line"
                         android:layout_width="match_parent"
                         android:layout_height="100px"
+                        android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
-                        android:layout_margin="@dimen/xs_playback_button_margin_px"
-                        android:background="@drawable/xs_dark_green_button_background_selector"
+                        android:layout_marginBottom="@dimen/_60px"
+                        android:layout_marginLeft="@dimen/xs_playback_button_margin_px"
+                        android:layout_marginRight="@dimen/xs__30px"
+                        android:background="@drawable/shape_selector_01bbb6_9ada6a"
                         android:gravity="center"
                         android:text="@string/xs_xunjian_line"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xs_global_text_size_px"
                         android:visibility="visible" />
-
-
-                </LinearLayout>
+                </RelativeLayout>
             </RelativeLayout>
 
             <Button
+
                 android:id="@+id/btn_playback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

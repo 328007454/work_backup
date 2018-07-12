@@ -467,7 +467,7 @@ public class TaskService extends BaseService<Task> {
         }
 
         try {
-            tasks = selector().expr("and  schedule_time > (select datetime('now','localtime','start of day','-6 day','weekday 1') )  AND" +
+            tasks = selector().and(Task.STATUS,"<>","done").expr("and  schedule_time > (select datetime('now','localtime','start of day','-6 day','weekday 1') )  AND" +
                     " schedule_time < (select datetime('now','localtime','start of day','23 hours','59 minutes','59 seconds','weekday 0') ) " + extraSql + " order by schedule_time asc").findAll();
         } catch (DbException e) {
             e.printStackTrace();

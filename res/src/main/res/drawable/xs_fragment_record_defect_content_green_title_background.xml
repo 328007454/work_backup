@@ -5,7 +5,7 @@
         <shape>
             <corners android:radius="@dimen/corner_radius" />
 
-            <solid android:color="@color/xs_green_color" />
+            <solid android:color="@color/color_019bfb" />
         </shape>
     </item>
     <item android:top="@dimen/xs_tab_strip_minheight">

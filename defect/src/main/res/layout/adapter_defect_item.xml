@@ -100,15 +100,34 @@
                 android:textColor="#ffb5c8c6"
                 android:textSize="33px" />
 
-            <TextView
-                android:id="@+id/tv_defect_space"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:gravity="center"
-                android:text="间隔："
-                android:textColor="#ffb5c8c6"
-                android:textSize="33px" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_defect_space"
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10px"
+                    android:gravity="left|center_vertical"
+                    android:text="间隔："
+                    android:textColor="#ffb5c8c6"
+                    android:textSize="33px" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_defect_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="正在跟踪..."
+                    android:textColor="@color/refresh_background_color"
+                    android:textSize="@dimen/core_padding_30px"
+                    android:visibility="gone" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_defect_device"

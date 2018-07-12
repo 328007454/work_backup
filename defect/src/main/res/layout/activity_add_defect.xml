@@ -7,9 +7,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/container_sure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10px"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+
+                android:background="@drawable/button_selector_f96a6a"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancle_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/selector_019bfb"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/container_sure">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -22,8 +69,7 @@
                     android:layout_height="@dimen/dimen_189px"
                     android:background="@drawable/xs_bottom_line_background_selector"
                     android:orientation="horizontal"
-                    android:paddingBottom="36px"
-                    android:paddingTop="45px"
+                    android:paddingTop="30px"
                     app:layout_constraintTop_toTopOf="parent"
                     app:lineColor="@color/white"
                     app:lineHeight="3px">
@@ -32,8 +78,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@color/white"
-                        android:orientation="vertical">
+                        android:background="@drawable/xs_bottom_line_background_selector"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/_20px">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -70,8 +117,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@color/white"
-                        android:orientation="vertical">
+                        android:background="@drawable/xs_bottom_line_background_selector"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/_20px">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -106,14 +154,14 @@
                     android:layout_height="@dimen/dimen_189px"
                     android:background="@drawable/xs_bottom_line_background_selector"
                     android:orientation="horizontal"
-                    android:paddingTop="45px"
+                    android:paddingTop="30px"
                     app:layout_constraintTop_toBottomOf="@+id/container_row_one">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/xs_bottom_line_background_selector"
                         android:orientation="vertical">
 
                         <TextView
@@ -172,14 +220,13 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/xs_bottom_line_background_selector"
                         android:orientation="vertical"
                         android:visibility="invisible">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="0px"
-                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingLeft="33px"
                             android:text="部件名称"
@@ -190,7 +237,8 @@
                         <TextView
                             android:id="@+id/txt_device_part_name"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0px"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/core_padding_30px"
                             android:paddingRight="@dimen/core_padding_30px"
@@ -206,106 +254,93 @@
                 <com.cnksi.core.view.UnderLineLinearLayout
                     android:id="@+id/container_row_three"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_189px"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/xs_bottom_line_background_selector"
-                    android:orientation="vertical"
-                    android:paddingTop="45px"
-                    app:layout_constraintTop_toBottomOf="@+id/container_row_two"
-                    app:lineColor="@color/white"
-                    app:lineHeight="3px">
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/container_row_two">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="33px"
-                        android:text="缺陷内容"
-                        android:textColor="@color/color_81878e"
-                        android:textSize="@dimen/dimen_33px" />
 
-                    <com.cnksi.common.view.ContainsEmojiEditText
-                        android:id="@+id/et_input_defect_content"
-                        android:layout_width="wrap_content"
+                    <com.cnksi.core.view.UnderLineLinearLayout
+                        android:layout_width="0px"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/xs__30px"
-                        android:layout_marginTop="30px"
-                        android:layout_toLeftOf="@+id/iv_defect_pic"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical|left"
-                        android:hint="@string/xs_please_input_defect_content_str"
-                        android:inputType="textMultiLine"
-                        android:selectAllOnFocus="true"
-                        android:singleLine="false"
-                        android:textColor="@color/xs_global_text_color"
-                        android:textColorHint="@color/xs_global_gray_text_color"
-                        android:textSize="@dimen/xs__39px" />
+                        android:layout_weight="1"
+                        android:minHeight="@dimen/dimen_189px"
+                        android:orientation="vertical"
+                        android:paddingTop="45px"
+                        app:lineColor="@color/white"
+                        app:lineHeight="3px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="33px"
+                            android:text="缺陷内容"
+                            android:textColor="@color/color_81878e"
+                            android:textSize="@dimen/dimen_33px" />
+
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:id="@+id/et_input_defect_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/xs__30px"
+                            android:layout_marginTop="30px"
+                            android:layout_toLeftOf="@+id/iv_defect_pic"
+                            android:background="@android:color/transparent"
+                            android:gravity="center_vertical|left"
+                            android:hint="@string/xs_please_input_defect_content_str"
+                            android:inputType="textMultiLine"
+                            android:selectAllOnFocus="true"
+                            android:singleLine="false"
+                            android:textColor="@color/xs_global_text_color"
+                            android:textColorHint="@color/xs_global_gray_text_color"
+                            android:textSize="@dimen/xs__39px" />
+                    </com.cnksi.core.view.UnderLineLinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/container_defect"
+                        android:layout_width="300px"
+                        android:layout_height="189px">
+
+                        <ImageButton
+                            android:id="@+id/ib_take_picture"
+                            style="@style/svgButtonCamera"
+                            android:layout_width="@dimen/xs_content_minheight_px"
+                            android:layout_height="@dimen/xs_content_minheight_px"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@null"
+                            app:srcCompat="@drawable/xs_camera_button_background" />
+
+                        <ImageView
+                            android:id="@+id/iv_defect_pic"
+                            android:layout_width="@dimen/xs_new_defect_photo_height"
+                            android:layout_height="@dimen/xs_new_defect_photo_height_px"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/core_padding_30px"
+                            android:layout_toLeftOf="@+id/ib_take_picture"
+                            android:contentDescription="@null"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:id="@+id/tv_defect_count"
+                            android:layout_width="@dimen/xs_defect_count_width_px"
+                            android:layout_height="@dimen/xs_defect_count_width_px"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="10px"
+                            android:layout_marginTop="20px"
+                            android:layout_toLeftOf="@+id/ib_take_picture"
+                            android:background="@drawable/xs_circle_text_background"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/xs_defect_count_text_size_px"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
                 </com.cnksi.core.view.UnderLineLinearLayout>
 
-
-                <RelativeLayout
-                    android:id="@+id/container_defect"
-                    android:layout_width="match_parent"
-                    android:layout_height="189px"
-                    android:background="@drawable/xs_bottom_line_background_selector"
-                    android:paddingStart="@dimen/core_padding_30px"
-                    android:paddingTop="45px"
-                    app:layout_constraintTop_toBottomOf="@+id/container_row_three">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="缺陷照片"
-                        android:textColor="@color/color_81878e"
-                        android:textSize="@dimen/dimen_33px" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/_20px"
-                        android:gravity="center_vertical"
-                        android:text="请拍照"
-                        android:textColor="@color/color_81878e"
-                        android:textSize="@dimen/xs__39px" />
-
-                    <ImageButton
-                        android:id="@+id/ib_take_picture"
-                        style="@style/svgButtonCamera"
-                        android:layout_width="@dimen/xs_content_minheight_px"
-                        android:layout_height="@dimen/xs_content_minheight_px"
-                        android:layout_alignParentRight="true"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="@null"
-                        android:minHeight="@dimen/xs_content_minheight_px"
-                        android:minWidth="@dimen/xs_content_minheight_px"
-                        app:srcCompat="@drawable/xs_camera_button_background" />
-
-                    <ImageView
-                        android:id="@+id/iv_defect_pic"
-                        android:layout_width="@dimen/xs_new_defect_photo_height"
-                        android:layout_height="@dimen/xs_new_defect_photo_height_px"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/core_padding_30px"
-                        android:layout_toLeftOf="@+id/ib_take_picture"
-                        android:contentDescription="@null"
-                        android:scaleType="centerCrop" />
-
-                    <TextView
-                        android:id="@+id/tv_defect_count"
-                        android:layout_width="@dimen/xs_defect_count_width_px"
-                        android:layout_height="@dimen/xs_defect_count_width_px"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="10px"
-                        android:layout_toLeftOf="@+id/ib_take_picture"
-                        android:background="@drawable/xs_circle_text_background"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/xs_defect_count_text_size_px"
-                        android:visibility="invisible" />
-                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/txt_defect_tips"
@@ -319,7 +354,7 @@
                     android:textColor="@color/color_81878e"
                     android:textSize="@dimen/dimen_33px"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/container_defect" />
+                    app:layout_constraintTop_toBottomOf="@+id/container_row_three" />
 
                 <com.cnksi.common.view.FlowRadioGroup
                     android:id="@+id/container_rb_general_defect"
@@ -487,60 +522,14 @@
                 </com.cnksi.common.view.AutoRadioGroup>
 
                 <android.support.v7.widget.RecyclerView
-                    android:background="@color/white"
                     android:id="@+id/rc_defect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     app:layout_constraintTop_toBottomOf="@+id/container_rg_ele_internet" />
-
-
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/container_sure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10px"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
-            android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
 
-            <Button
-                android:id="@+id/btn_cancel"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="118px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-                android:layout_weight="1"
-
-                android:background="@drawable/button_selector_f96a6a"
-                android:gravity="center"
-                android:minHeight="@dimen/xs_button_minheight"
-                android:text="@string/xs_dialog_cancle_str"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_global_text_size_px" />
-
-            <Button
-                android:id="@+id/btn_sure"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="118px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-                android:layout_weight="1"
-                android:background="@drawable/selector_019bfb"
-                android:gravity="center"
-                android:minHeight="@dimen/xs_button_minheight"
-                android:text="@string/xs_dialog_sure_str"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_global_text_size_px" />
-
-
-        </LinearLayout>
     </RelativeLayout>
 </layout>

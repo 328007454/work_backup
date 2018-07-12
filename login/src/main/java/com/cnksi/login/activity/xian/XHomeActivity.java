@@ -11,6 +11,7 @@ import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.login.R;
 import com.cnksi.login.adapter.WeekTaskPagerAdapter;
 import com.cnksi.login.databinding.LoginActivityHomeBinding;
@@ -30,7 +31,7 @@ public class XHomeActivity extends BaseTitleActivity implements OnTabSelectListe
 
     LoginActivityHomeBinding homeBinding;
     private final List<String> weekTitles = new ArrayList<>();
-    private final String[] titleTypes = {InspectionType.SBXS.value, InspectionType.RCWH.value, InspectionType.LHSY.value, InspectionType.QXGL.value,InspectionType.SBJC.value};
+    private final String[] titleTypes = {InspectionType.SBXS.value, InspectionType.RCWH.value, InspectionType.LHSY.value, InspectionType.QXGL.value, InspectionType.SBJC.value};
     private ArrayList<WeekTaskFragment> mFragments = new ArrayList<>();
     private boolean isNotFirstLoad;
 
@@ -111,39 +112,54 @@ public class XHomeActivity extends BaseTitleActivity implements OnTabSelectListe
             ActivityUtil.startSync(mActivity);
         });
         homeBinding.includeType.txtTour.setOnClickListener(v -> {
-            ActivityUtil.startTourActivity(mActivity,InspectionType.SBXS.name());
+            ActivityUtil.startTourActivity(mActivity, InspectionType.SBXS.name());
         });
 
         homeBinding.includeType.txtMaintance.setOnClickListener(v -> {
-            ActivityUtil.startTourActivity(mActivity,InspectionType.maintenance.name());
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
+//            ActivityUtil.startTourActivity(mActivity, InspectionType.maintenance.name());
         });
 
         homeBinding.includeType.txtSwitchover.setOnClickListener(v -> {
-            ActivityUtil.startTourActivity(mActivity,InspectionType.switchover.name());
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
+//            ActivityUtil.startTourActivity(mActivity, InspectionType.switchover.name());
         });
 
         homeBinding.includeType.txtCopy.setOnClickListener(v -> {
-            ActivityUtil.startShuJuJianCe(mActivity);
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
+//            ActivityUtil.startShuJuJianCe(mActivity);
         });
         homeBinding.includeType.txtDefect.setOnClickListener(v -> {
             ActivityUtil.startDefectControlActivity(mActivity);
         });
 
         homeBinding.includeType.txtWorkTicket.setOnClickListener(v -> {
-            ActivityUtil.startTicketDateModel(mActivity);
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
+//            ActivityUtil.startTicketDateModel(mActivity);
         });
         homeBinding.includeType.txtOperation.setOnClickListener(v -> {
-            ActivityUtil.startOperateActivity(mActivity);
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
+//            ActivityUtil.startOperateActivity(mActivity);
         });
         homeBinding.includeType.txtSafetyTool.setOnClickListener(v -> {
-            ActivityUtil.startSafetyToolActivity(mActivity);
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
+//            ActivityUtil.startSafetyToolActivity(mActivity);
         });
         homeBinding.includeType.txtModfyRecord.setOnClickListener(v -> {
-
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
         });
 
         homeBinding.includeType.txtEducation.setOnClickListener(v -> {
-            ActivityUtil.startWTYCActiviy(mActivity);
+            ToastUtils.showMessage("功能正在开发中。");
+            return;
+//            ActivityUtil.startWTYCActiviy(mActivity);
         });
 
 

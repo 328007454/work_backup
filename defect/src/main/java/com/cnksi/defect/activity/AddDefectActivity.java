@@ -267,7 +267,7 @@ public class AddDefectActivity extends BaseTitleActivity {
 
     private void createDefectDialog() {
         originModels.clear();
-        if (defaultDefectModels!=null) {
+        if (defaultDefectModels != null) {
             for (DbModel model : defaultDefectModels) {
                 if (!map.keySet().isEmpty() && map.containsKey(model.getString("level"))) {
                     DefectType defectType = map.get(model.getString("level"));
@@ -417,8 +417,15 @@ public class AddDefectActivity extends BaseTitleActivity {
             DbModel model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
             if (TextUtils.equals(clickMode, SPACE)) {
                 spaceName = model.getString("spacingName");
+                deviceName = model.getString("deviceName");
                 spaceId = model.getString("spid");
+                deviceId = model.getString("deviceId");
+                deviceDtId = model.getString("dtid");
                 binding.txtSpaceName.setText(TextUtils.isEmpty(spaceName) ? "" : spaceName);
+                binding.etInputDevice.setText(TextUtils.isEmpty(deviceName) ? "" : deviceName);
+                if (!TextUtils.isEmpty(deviceDtId)) {
+                    getAllDefectStandardId();
+                }
             } else if (TextUtils.equals(clickMode, DEVICE)) {
                 spaceName = model.getString("spacingName");
                 deviceName = model.getString("deviceName");
@@ -456,7 +463,7 @@ public class AddDefectActivity extends BaseTitleActivity {
             binding.tvDefectCount.setText("");
             binding.tvDefectCount.setVisibility(View.GONE);
         }
-        currentImageName="";
+        currentImageName = "";
     }
 
     RadioGroup.OnCheckedChangeListener onCheckedChangeListener = (group, checkedId) -> {
