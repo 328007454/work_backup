@@ -110,7 +110,7 @@
             <com.flyco.tablayout.SlidingTabLayout
                 android:id="@+id/st_week"
                 android:layout_width="match_parent"
-                android:layout_height="99px"
+                android:layout_height="54dp"
                 android:background="#EDF6FC"
                 app:layout_constraintTop_toBottomOf="@id/txt_week_title"
                 app:tl_indicator_color="#019BFB"

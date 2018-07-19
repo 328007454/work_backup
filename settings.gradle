@@ -1,5 +1,6 @@
 
 include ':workticket', ':res', ':common', ':defect', ':login'
 include ':sjjc', ':tts', ':bdloc', ':pickerview',':bdzinspection', ':workticket'
+include ':scanner'
 
 

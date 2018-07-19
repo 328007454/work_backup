@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply from: 'maven_push.gradle'
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+//    api files('libs/ch.ntb.usb-0.5.9.jar')
+    api 'com.android.support:appcompat-v7:27.1.1'
+//    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    api 'com.cnksi:Zebra_Scanner_Sdk:1.0.0.1'
+    api 'com.cnksi:Zebra_Rfid_Sdk:1.0.0.1'
+}

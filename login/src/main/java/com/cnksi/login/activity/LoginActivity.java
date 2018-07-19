@@ -61,7 +61,6 @@ import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * 登录界面
- *
  * @author Wastrel
  */
 public class LoginActivity extends BaseLoginActivity implements GrantPermissionListener {
@@ -93,6 +92,7 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.BLUETOOTH,
             Manifest.permission.CAMERA};
     /**
      * 屏蔽Wifi计数器
@@ -161,16 +161,16 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
             }
         });
 
-        ExecutorManager.executeTaskSerially(() ->{
+        ExecutorManager.executeTaskSerially(() -> {
             try {
-               DbModel dbModel =  CommonApplication.getInstance().getDbManager().findDbModelFirst(new SqlInfo("select * from province where dlt = 0 "));
+                DbModel dbModel = CommonApplication.getInstance().getDbManager().findDbModelFirst(new SqlInfo("select * from province where dlt = 0 "));
                 runOnUiThread(() -> {
-                    if (dbModel==null){
+                    if (dbModel == null) {
                         binding.tvVersion.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         String copyRightsName = dbModel.getString("copyright");
                         String version = dbModel.getString("pad_version");
-                        binding.tvVersion.setText((TextUtils.isEmpty(copyRightsName)?"":copyRightsName)+""+(TextUtils.isEmpty(version)?"":version));
+                        binding.tvVersion.setText((TextUtils.isEmpty(copyRightsName) ? "" : copyRightsName) + "" + (TextUtils.isEmpty(version) ? "" : version));
                     }
                 });
             } catch (DbException e) {
@@ -282,7 +282,6 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
 
     /**
      * 登录
-     *
      * @param login true 登录系统 false 添加登录人员
      */
     private void loginUser(boolean login) {
@@ -425,7 +424,6 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
 
     /**
      * 显示登陆成功的用户
-     *
      * @param mUsers
      */
     private void setUserLoginSuccess(Users mUsers, ImageView mImageView) {
@@ -512,7 +510,6 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
 
     /**
      * 语音播报
-     *
      * @param content
      */
     protected void speak(String content) {

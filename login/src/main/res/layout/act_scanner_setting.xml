@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="已连接扫描仪" />
+
+    <LinearLayout
+        android:id="@+id/lastScannerGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="name" />
+
+            <TextView
+                android:id="@+id/addressBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="address" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/settingBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="断开连接" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:background="#999999" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="可用扫描仪" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/discoverBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="重新扫描" />
+</LinearLayout>
